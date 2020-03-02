@@ -1,0 +1,2095 @@
+-----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/
+> Log Files/1_clean data_18 Feb 2020.txt
+  log type:  text
+ opened on:  18 Feb 2020, 08:26:57
+
+. ********************************************************************************
+. 
+. ********************************************************************************
+. 
+. global data "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stat
+> a/Raw Data"
+
+. global output "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/St
+> ata/Tables"
+
+. 
+. *************************
+. *       Step 1: Clean       *
+. *************************
+. 
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+.         
+. //1.1: Fix variables
+. 
+.         *A. Change variable names
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                   African Studies  |          1        1.79        5.36
+            American Foreign Policy |          1        1.79        7.14
+                                 CM |          1        1.79        8.93
+                              China |          1        1.79       10.71
+                      China Studies |          1        1.79       12.50
+                Conflict Management |          2        3.57       16.07
+               Conflict Management  |          2        3.57       19.64
+                       Cuck Studies |          1        1.79       21.43
+                                ERE |          3        5.36       26.79
+        European & Eurasian Studies |          1        1.79       28.57
+          European Eurasian Studies |          1        1.79       30.36
+      European and Eurasian Studies |          1        1.79       32.14
+         Global theory and history  |          1        1.79       33.93
+                               IDEV |          4        7.14       41.07
+                                IPE |          2        3.57       44.64
+                               Idev |          2        3.57       48.21
+          International Development |          1        1.79       50.00
+                  International Law |          1        1.79       51.79
+    International Political Economy |          3        5.36       57.14
+International law and Organizations |          1        1.79       58.93
+                      Japan Studies |          1        1.79       60.71
+                               LASP |          3        5.36       66.07
+             Latin American Studies |          1        1.79       67.86
+                Middle East Studies |          2        3.57       71.43
+               Middle East Studies  |          1        1.79       73.21
+                Middle east studies |          1        1.79       75.00
+             Southeast Asia Studies |          1        1.79       76.79
+                              Strat |          3        5.36       82.14
+                             Strat  |          1        1.79       83.93
+                  Strategic Studies |          8       14.29       98.21
+                                ere |          1        1.79      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(41 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                    AFRICAN STUDIES |          1        1.79        5.36
+            AMERICAN FOREIGN POLICY |          1        1.79        7.14
+                              CHINA |          1        1.79        8.93
+                      CHINA STUDIES |          1        1.79       10.71
+                                 CM |          1        1.79       12.50
+                CONFLICT MANAGEMENT |          4        7.14       19.64
+                       CUCK STUDIES |          1        1.79       21.43
+                                ERE |          4        7.14       28.57
+        EUROPEAN & EURASIAN STUDIES |          1        1.79       30.36
+      EUROPEAN AND EURASIAN STUDIES |          1        1.79       32.14
+          EUROPEAN EURASIAN STUDIES |          1        1.79       33.93
+          GLOBAL THEORY AND HISTORY |          1        1.79       35.71
+                               IDEV |          6       10.71       46.43
+          INTERNATIONAL DEVELOPMENT |          1        1.79       48.21
+                  INTERNATIONAL LAW |          1        1.79       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.79       51.79
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.36       57.14
+                                IPE |          2        3.57       60.71
+                      JAPAN STUDIES |          1        1.79       62.50
+                               LASP |          3        5.36       67.86
+             LATIN AMERICAN STUDIES |          1        1.79       69.64
+                MIDDLE EAST STUDIES |          4        7.14       76.79
+             SOUTHEAST ASIA STUDIES |          1        1.79       78.57
+                              STRAT |          4        7.14       85.71
+                  STRATEGIC STUDIES |          8       14.29      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(4 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    AFRICAN STUDIES |          1        1.82        7.27
+                      CHINA STUDIES |          2        3.64       10.91
+                CONFLICT MANAGEMENT |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      EUROPEAN AND EURASIAN STUDIES |          3        5.45       32.73
+          GLOBAL THEORY AND HISTORY |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  INTERNATIONAL LAW |          1        1.82       49.09
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.82       50.91
+    INTERNATIONAL POLITICAL ECONOMY |          5        9.09       60.00
+                      JAPAN STUDIES |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                MIDDLE EAST STUDIES |          4        7.27       76.36
+             SOUTHEAST ASIA STUDIES |          1        1.82       78.18
+                  STRATEGIC STUDIES |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(37 real changes made)
+
+.                         
+.         *C. Clean deg_prog
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         51       92.73       92.73
+        MA  |          1        1.82       94.55
+         Ma |          1        1.82       96.36
+       Mipp |          1        1.82       98.18
+         ma |          1        1.82      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+.                 replace deg_prog = upper(deg_prog)
+(3 real changes made)
+
+.                 replace deg_prog = strtrim(deg_prog)
+(1 real change made)
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         54       98.18       98.18
+       MIPP |          1        1.82      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+.                 
+.         *D. Encode values
+.                 
+.                 **1. Concent
+.                         encode concent, gen(e_concent) 
+
+. 
+.                 **2. Candidates
+.                         label define candidates 1 "Amy Klobuchar" 2 "Bernie Sanders" 3 "Elizabeth Warren" ///
+>                                 4 "Joe Biden" 5 "Mike Bloomberg" 6 "Pete Buttigieg"
+
+.                         foreach var of varlist support_dem mostlikely_dem {
+  2.                                 encode `var', gen(e_`var') label(candidates)
+  3.                                 }
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+.         
+. //1.1: Fix variables
+. 
+.         *A. Change variable names
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                   African Studies  |          1        1.79        5.36
+            American Foreign Policy |          1        1.79        7.14
+                                 CM |          1        1.79        8.93
+                              China |          1        1.79       10.71
+                      China Studies |          1        1.79       12.50
+                Conflict Management |          2        3.57       16.07
+               Conflict Management  |          2        3.57       19.64
+                       Cuck Studies |          1        1.79       21.43
+                                ERE |          3        5.36       26.79
+        European & Eurasian Studies |          1        1.79       28.57
+          European Eurasian Studies |          1        1.79       30.36
+      European and Eurasian Studies |          1        1.79       32.14
+         Global theory and history  |          1        1.79       33.93
+                               IDEV |          4        7.14       41.07
+                                IPE |          2        3.57       44.64
+                               Idev |          2        3.57       48.21
+          International Development |          1        1.79       50.00
+                  International Law |          1        1.79       51.79
+    International Political Economy |          3        5.36       57.14
+International law and Organizations |          1        1.79       58.93
+                      Japan Studies |          1        1.79       60.71
+                               LASP |          3        5.36       66.07
+             Latin American Studies |          1        1.79       67.86
+                Middle East Studies |          2        3.57       71.43
+               Middle East Studies  |          1        1.79       73.21
+                Middle east studies |          1        1.79       75.00
+             Southeast Asia Studies |          1        1.79       76.79
+                              Strat |          3        5.36       82.14
+                             Strat  |          1        1.79       83.93
+                  Strategic Studies |          8       14.29       98.21
+                                ere |          1        1.79      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(41 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                    AFRICAN STUDIES |          1        1.79        5.36
+            AMERICAN FOREIGN POLICY |          1        1.79        7.14
+                              CHINA |          1        1.79        8.93
+                      CHINA STUDIES |          1        1.79       10.71
+                                 CM |          1        1.79       12.50
+                CONFLICT MANAGEMENT |          4        7.14       19.64
+                       CUCK STUDIES |          1        1.79       21.43
+                                ERE |          4        7.14       28.57
+        EUROPEAN & EURASIAN STUDIES |          1        1.79       30.36
+      EUROPEAN AND EURASIAN STUDIES |          1        1.79       32.14
+          EUROPEAN EURASIAN STUDIES |          1        1.79       33.93
+          GLOBAL THEORY AND HISTORY |          1        1.79       35.71
+                               IDEV |          6       10.71       46.43
+          INTERNATIONAL DEVELOPMENT |          1        1.79       48.21
+                  INTERNATIONAL LAW |          1        1.79       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.79       51.79
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.36       57.14
+                                IPE |          2        3.57       60.71
+                      JAPAN STUDIES |          1        1.79       62.50
+                               LASP |          3        5.36       67.86
+             LATIN AMERICAN STUDIES |          1        1.79       69.64
+                MIDDLE EAST STUDIES |          4        7.14       76.79
+             SOUTHEAST ASIA STUDIES |          1        1.79       78.57
+                              STRAT |          4        7.14       85.71
+                  STRATEGIC STUDIES |          8       14.29      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(4 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                                 
+.                 **3. Drop bad entries
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    AFRICAN STUDIES |          1        1.82        7.27
+                      CHINA STUDIES |          2        3.64       10.91
+                CONFLICT MANAGEMENT |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      EUROPEAN AND EURASIAN STUDIES |          3        5.45       32.73
+          GLOBAL THEORY AND HISTORY |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  INTERNATIONAL LAW |          1        1.82       49.09
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.82       50.91
+    INTERNATIONAL POLITICAL ECONOMY |          5        9.09       60.00
+                      JAPAN STUDIES |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                MIDDLE EAST STUDIES |          4        7.27       76.36
+             SOUTHEAST ASIA STUDIES |          1        1.82       78.18
+                  STRATEGIC STUDIES |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(37 real changes made)
+
+. 
+end of do-file
+
+. tab concent      
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    African Studies |          1        1.82        7.27
+                      China Studies |          2        3.64       10.91
+                Conflict Management |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      European And Eurasian Studies |          3        5.45       32.73
+          Global Theory And History |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  International Law |          1        1.82       49.09
+International Law And Organizations |          1        1.82       50.91
+    International Political Economy |          5        9.09       60.00
+                      Japan Studies |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                Middle East Studies |          4        7.27       76.36
+             Southeast Asia Studies |          1        1.82       78.18
+                  Strategic Studies |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         replace concent = "CONFLICT MANAGEMENT/ILAW" if ///
+>                                 inlist(concent, "Conflict Management", "International Law")
+(6 real changes made)
+
+.                         replace concent = "IPE/AFP/Global Theory & History" if ///
+>                                 inlist(concent, "International Political Economy", "AFP", "Global Theory And History")
+(9 real changes made)
+
+.                         replace concent = "China/Japan/Southeast Asia Studies" if ///
+>                                 inlist(concent, "China Studies", "Japan Studies", "Southeast Asia Studies")
+(4 real changes made)
+
+.                         replace concent = "European/Eurasian/Middle East/African Studies" if ///
+>                                 inlist(concent, "European And Eurasian Studies", "Middle East Studies", "African Studies")
+variable concent was str35 now str45
+(8 real changes made)
+
+. 
+end of do-file
+
+. tab concent 
+
+                          Concentration |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+               CONFLICT MANAGEMENT/ILAW |          6       10.91       10.91
+     China/Japan/Southeast Asia Studies |          4        7.27       18.18
+                                    ERE |          4        7.27       25.45
+European/Eurasian/Middle East/African.. |          8       14.55       40.00
+                                   IDEV |          7       12.73       52.73
+        IPE/AFP/Global Theory & History |          9       16.36       69.09
+    International Law And Organizations |          1        1.82       70.91
+                                   LASP |          4        7.27       78.18
+                      Strategic Studies |         12       21.82      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         55      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+.         
+. //1.1: Fix variables
+. 
+.         *A. Change variable names
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                   African Studies  |          1        1.79        5.36
+            American Foreign Policy |          1        1.79        7.14
+                                 CM |          1        1.79        8.93
+                              China |          1        1.79       10.71
+                      China Studies |          1        1.79       12.50
+                Conflict Management |          2        3.57       16.07
+               Conflict Management  |          2        3.57       19.64
+                       Cuck Studies |          1        1.79       21.43
+                                ERE |          3        5.36       26.79
+        European & Eurasian Studies |          1        1.79       28.57
+          European Eurasian Studies |          1        1.79       30.36
+      European and Eurasian Studies |          1        1.79       32.14
+         Global theory and history  |          1        1.79       33.93
+                               IDEV |          4        7.14       41.07
+                                IPE |          2        3.57       44.64
+                               Idev |          2        3.57       48.21
+          International Development |          1        1.79       50.00
+                  International Law |          1        1.79       51.79
+    International Political Economy |          3        5.36       57.14
+International law and Organizations |          1        1.79       58.93
+                      Japan Studies |          1        1.79       60.71
+                               LASP |          3        5.36       66.07
+             Latin American Studies |          1        1.79       67.86
+                Middle East Studies |          2        3.57       71.43
+               Middle East Studies  |          1        1.79       73.21
+                Middle east studies |          1        1.79       75.00
+             Southeast Asia Studies |          1        1.79       76.79
+                              Strat |          3        5.36       82.14
+                             Strat  |          1        1.79       83.93
+                  Strategic Studies |          8       14.29       98.21
+                                ere |          1        1.79      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(41 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                    AFRICAN STUDIES |          1        1.79        5.36
+            AMERICAN FOREIGN POLICY |          1        1.79        7.14
+                              CHINA |          1        1.79        8.93
+                      CHINA STUDIES |          1        1.79       10.71
+                                 CM |          1        1.79       12.50
+                CONFLICT MANAGEMENT |          4        7.14       19.64
+                       CUCK STUDIES |          1        1.79       21.43
+                                ERE |          4        7.14       28.57
+        EUROPEAN & EURASIAN STUDIES |          1        1.79       30.36
+      EUROPEAN AND EURASIAN STUDIES |          1        1.79       32.14
+          EUROPEAN EURASIAN STUDIES |          1        1.79       33.93
+          GLOBAL THEORY AND HISTORY |          1        1.79       35.71
+                               IDEV |          6       10.71       46.43
+          INTERNATIONAL DEVELOPMENT |          1        1.79       48.21
+                  INTERNATIONAL LAW |          1        1.79       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.79       51.79
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.36       57.14
+                                IPE |          2        3.57       60.71
+                      JAPAN STUDIES |          1        1.79       62.50
+                               LASP |          3        5.36       67.86
+             LATIN AMERICAN STUDIES |          1        1.79       69.64
+                MIDDLE EAST STUDIES |          4        7.14       76.79
+             SOUTHEAST ASIA STUDIES |          1        1.79       78.57
+                              STRAT |          4        7.14       85.71
+                  STRATEGIC STUDIES |          8       14.29      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(4 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                                 
+.                 **3. Drop bad entries
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    AFRICAN STUDIES |          1        1.82        7.27
+                      CHINA STUDIES |          2        3.64       10.91
+                CONFLICT MANAGEMENT |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      EUROPEAN AND EURASIAN STUDIES |          3        5.45       32.73
+          GLOBAL THEORY AND HISTORY |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  INTERNATIONAL LAW |          1        1.82       49.09
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.82       50.91
+    INTERNATIONAL POLITICAL ECONOMY |          5        9.09       60.00
+                      JAPAN STUDIES |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                MIDDLE EAST STUDIES |          4        7.27       76.36
+             SOUTHEAST ASIA STUDIES |          1        1.82       78.18
+                  STRATEGIC STUDIES |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(37 real changes made)
+
+.                         
+.                 **4. Combine concentrations
+.                         replace concent = "Conflict Management/ILaw" if ///
+>                                 inlist(concent, "Conflict Management", "International Law And Organizations")
+(6 real changes made)
+
+.                         replace concent = "IPE/AFP/Global Theory & History" if ///
+>                                 inlist(concent, "International Political Economy", "AFP", "Global Theory And History")
+(9 real changes made)
+
+.                         replace concent = "China/Japan/Southeast Asia Studies" if ///
+>                                 inlist(concent, "China Studies", "Japan Studies", "Southeast Asia Studies")
+(4 real changes made)
+
+.                         replace concent = "European/Eurasian/Middle East/African Studies" if ///
+>                                 inlist(concent, "European And Eurasian Studies", "Middle East Studies", "African Studies")
+variable concent was str35 now str45
+(8 real changes made)
+
+.                         
+. 
+end of do-file
+
+. tab concent 
+
+                          Concentration |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+     China/Japan/Southeast Asia Studies |          4        7.27        7.27
+               Conflict Management/ILaw |          6       10.91       18.18
+                                    ERE |          4        7.27       25.45
+European/Eurasian/Middle East/African.. |          8       14.55       40.00
+                                   IDEV |          7       12.73       52.73
+        IPE/AFP/Global Theory & History |          9       16.36       69.09
+                      International Law |          1        1.82       70.91
+                                   LASP |          4        7.27       78.18
+                      Strategic Studies |         12       21.82      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         55      100.00
+
+. set more on, permanently
+(set more preference recorded)
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+.         
+. //1.1: Fix variables
+. 
+.         *A. Change variable names
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                   African Studies  |          1        1.79        5.36
+            American Foreign Policy |          1        1.79        7.14
+                                 CM |          1        1.79        8.93
+                              China |          1        1.79       10.71
+                      China Studies |          1        1.79       12.50
+                Conflict Management |          2        3.57       16.07
+               Conflict Management  |          2        3.57       19.64
+                       Cuck Studies |          1        1.79       21.43
+                                ERE |          3        5.36       26.79
+        European & Eurasian Studies |          1        1.79       28.57
+          European Eurasian Studies |          1        1.79       30.36
+      European and Eurasian Studies |          1        1.79       32.14
+         Global theory and history  |          1        1.79       33.93
+                               IDEV |          4        7.14       41.07
+                                IPE |          2        3.57       44.64
+                               Idev |          2        3.57       48.21
+          International Development |          1        1.79       50.00
+                  International Law |          1        1.79       51.79
+    International Political Economy |          3        5.36       57.14
+International law and Organizations |          1        1.79       58.93
+                      Japan Studies |          1        1.79       60.71
+                               LASP |          3        5.36       66.07
+             Latin American Studies |          1        1.79       67.86
+                Middle East Studies |          2        3.57       71.43
+               Middle East Studies  |          1        1.79       73.21
+                Middle east studies |          1        1.79       75.00
+             Southeast Asia Studies |          1        1.79       76.79
+                              Strat |          3        5.36       82.14
+                             Strat  |          1        1.79       83.93
+                  Strategic Studies |          8       14.29       98.21
+                                ere |          1        1.79      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(41 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                    AFRICAN STUDIES |          1        1.79        5.36
+            AMERICAN FOREIGN POLICY |          1        1.79        7.14
+                              CHINA |          1        1.79        8.93
+                      CHINA STUDIES |          1        1.79       10.71
+                                 CM |          1        1.79       12.50
+                CONFLICT MANAGEMENT |          4        7.14       19.64
+                       CUCK STUDIES |          1        1.79       21.43
+                                ERE |          4        7.14       28.57
+        EUROPEAN & EURASIAN STUDIES |          1        1.79       30.36
+      EUROPEAN AND EURASIAN STUDIES |          1        1.79       32.14
+          EUROPEAN EURASIAN STUDIES |          1        1.79       33.93
+          GLOBAL THEORY AND HISTORY |          1        1.79       35.71
+                               IDEV |          6       10.71       46.43
+          INTERNATIONAL DEVELOPMENT |          1        1.79       48.21
+                  INTERNATIONAL LAW |          1        1.79       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.79       51.79
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.36       57.14
+                                IPE |          2        3.57       60.71
+                      JAPAN STUDIES |          1        1.79       62.50
+                               LASP |          3        5.36       67.86
+             LATIN AMERICAN STUDIES |          1        1.79       69.64
+                MIDDLE EAST STUDIES |          4        7.14       76.79
+             SOUTHEAST ASIA STUDIES |          1        1.79       78.57
+                              STRAT |          4        7.14       85.71
+                  STRATEGIC STUDIES |          8       14.29      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(4 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                                 
+.                 **3. Drop bad entries
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    AFRICAN STUDIES |          1        1.82        7.27
+                      CHINA STUDIES |          2        3.64       10.91
+                CONFLICT MANAGEMENT |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      EUROPEAN AND EURASIAN STUDIES |          3        5.45       32.73
+          GLOBAL THEORY AND HISTORY |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  INTERNATIONAL LAW |          1        1.82       49.09
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.82       50.91
+    INTERNATIONAL POLITICAL ECONOMY |          5        9.09       60.00
+                      JAPAN STUDIES |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                MIDDLE EAST STUDIES |          4        7.27       76.36
+             SOUTHEAST ASIA STUDIES |          1        1.82       78.18
+                  STRATEGIC STUDIES |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(37 real changes made)
+
+.                         
+.                 **4. Combine concentrations
+.                         replace concent = "Conflict Management/ILaw" if ///
+>                                 inlist(concent, "Conflict Management", "International Law And Organizations", ///
+>                                 "International Law")
+(7 real changes made)
+
+.                         replace concent = "IPE/AFP/Global Theory & History" if ///
+>                                 inlist(concent, "International Political Economy", "AFP", ///
+>                                 "Global Theory And History")
+(9 real changes made)
+
+.                         replace concent = "China/Japan/Southeast Asia Studies" if ///
+>                                 inlist(concent, "China Studies", "Japan Studies", "Southeast Asia Studies")
+(4 real changes made)
+
+.                         replace concent = "European/Eurasian/Middle East/African Studies" if ///
+>                                 inlist(concent, "European And Eurasian Studies", "Middle East Studies", ///
+>                                 "African Studies")
+variable concent was str35 now str45
+(8 real changes made)
+
+. 
+end of do-file
+
+. set more off, permanently 
+(set more preference recorded)
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+.         
+. //1.1: Fix variables
+. 
+.         *A. Change variable names
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                   African Studies  |          1        1.79        5.36
+            American Foreign Policy |          1        1.79        7.14
+                                 CM |          1        1.79        8.93
+                              China |          1        1.79       10.71
+                      China Studies |          1        1.79       12.50
+                Conflict Management |          2        3.57       16.07
+               Conflict Management  |          2        3.57       19.64
+                       Cuck Studies |          1        1.79       21.43
+                                ERE |          3        5.36       26.79
+        European & Eurasian Studies |          1        1.79       28.57
+          European Eurasian Studies |          1        1.79       30.36
+      European and Eurasian Studies |          1        1.79       32.14
+         Global theory and history  |          1        1.79       33.93
+                               IDEV |          4        7.14       41.07
+                                IPE |          2        3.57       44.64
+                               Idev |          2        3.57       48.21
+          International Development |          1        1.79       50.00
+                  International Law |          1        1.79       51.79
+    International Political Economy |          3        5.36       57.14
+International law and Organizations |          1        1.79       58.93
+                      Japan Studies |          1        1.79       60.71
+                               LASP |          3        5.36       66.07
+             Latin American Studies |          1        1.79       67.86
+                Middle East Studies |          2        3.57       71.43
+               Middle East Studies  |          1        1.79       73.21
+                Middle east studies |          1        1.79       75.00
+             Southeast Asia Studies |          1        1.79       76.79
+                              Strat |          3        5.36       82.14
+                             Strat  |          1        1.79       83.93
+                  Strategic Studies |          8       14.29       98.21
+                                ere |          1        1.79      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(41 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.57        3.57
+                    AFRICAN STUDIES |          1        1.79        5.36
+            AMERICAN FOREIGN POLICY |          1        1.79        7.14
+                              CHINA |          1        1.79        8.93
+                      CHINA STUDIES |          1        1.79       10.71
+                                 CM |          1        1.79       12.50
+                CONFLICT MANAGEMENT |          4        7.14       19.64
+                       CUCK STUDIES |          1        1.79       21.43
+                                ERE |          4        7.14       28.57
+        EUROPEAN & EURASIAN STUDIES |          1        1.79       30.36
+      EUROPEAN AND EURASIAN STUDIES |          1        1.79       32.14
+          EUROPEAN EURASIAN STUDIES |          1        1.79       33.93
+          GLOBAL THEORY AND HISTORY |          1        1.79       35.71
+                               IDEV |          6       10.71       46.43
+          INTERNATIONAL DEVELOPMENT |          1        1.79       48.21
+                  INTERNATIONAL LAW |          1        1.79       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.79       51.79
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.36       57.14
+                                IPE |          2        3.57       60.71
+                      JAPAN STUDIES |          1        1.79       62.50
+                               LASP |          3        5.36       67.86
+             LATIN AMERICAN STUDIES |          1        1.79       69.64
+                MIDDLE EAST STUDIES |          4        7.14       76.79
+             SOUTHEAST ASIA STUDIES |          1        1.79       78.57
+                              STRAT |          4        7.14       85.71
+                  STRATEGIC STUDIES |          8       14.29      100.00
+------------------------------------+-----------------------------------
+                              Total |         56      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(4 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                                 
+.                 **3. Drop bad entries
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.45        5.45
+                    AFRICAN STUDIES |          1        1.82        7.27
+                      CHINA STUDIES |          2        3.64       10.91
+                CONFLICT MANAGEMENT |          5        9.09       20.00
+                                ERE |          4        7.27       27.27
+      EUROPEAN AND EURASIAN STUDIES |          3        5.45       32.73
+          GLOBAL THEORY AND HISTORY |          1        1.82       34.55
+                               IDEV |          7       12.73       47.27
+                  INTERNATIONAL LAW |          1        1.82       49.09
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.82       50.91
+    INTERNATIONAL POLITICAL ECONOMY |          5        9.09       60.00
+                      JAPAN STUDIES |          1        1.82       61.82
+                               LASP |          4        7.27       69.09
+                MIDDLE EAST STUDIES |          4        7.27       76.36
+             SOUTHEAST ASIA STUDIES |          1        1.82       78.18
+                  STRATEGIC STUDIES |         12       21.82      100.00
+------------------------------------+-----------------------------------
+                              Total |         55      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(37 real changes made)
+
+.                         
+.                 **4. Combine concentrations
+.                         replace concent = "Conflict Management/ILaw" if ///
+>                                 inlist(concent, "Conflict Management", "International Law And Organizations", ///
+>                                 "International Law")
+(7 real changes made)
+
+.                         replace concent = "IPE/AFP/Global Theory & History" if ///
+>                                 inlist(concent, "International Political Economy", "AFP", ///
+>                                 "Global Theory And History")
+(9 real changes made)
+
+.                         replace concent = "China/Japan/Southeast Asia Studies" if ///
+>                                 inlist(concent, "China Studies", "Japan Studies", "Southeast Asia Studies")
+(4 real changes made)
+
+.                         replace concent = "European/Eurasian/Middle East/African Studies" if ///
+>                                 inlist(concent, "European And Eurasian Studies", "Middle East Studies", ///
+>                                 "African Studies")
+variable concent was str35 now str45
+(8 real changes made)
+
+. 
+end of do-file
+
+. tab concent 
+
+                          Concentration |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+     China/Japan/Southeast Asia Studies |          4        7.27        7.27
+               Conflict Management/ILaw |          7       12.73       20.00
+                                    ERE |          4        7.27       27.27
+European/Eurasian/Middle East/African.. |          8       14.55       41.82
+                                   IDEV |          7       12.73       54.55
+        IPE/AFP/Global Theory & History |          9       16.36       70.91
+                                   LASP |          4        7.27       78.18
+                      Strategic Studies |         12       21.82      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         55      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         51       92.73       92.73
+        MA  |          1        1.82       94.55
+         Ma |          1        1.82       96.36
+       Mipp |          1        1.82       98.18
+         ma |          1        1.82      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+.                 replace deg_prog = upper(deg_prog)
+(3 real changes made)
+
+.                 replace deg_prog = strtrim(deg_prog)
+(1 real change made)
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         54       98.18       98.18
+       MIPP |          1        1.82      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+.                 
+.         *D. Encode values
+.                 
+.                 **1. Concent
+.                         encode concent, gen(e_concent) 
+
+. 
+.                 **2. Candidates
+.                         label define candidates 1 "Amy Klobuchar" 2 "Bernie Sanders" 3 "Elizabeth Warren" ///
+>                                 4 "Joe Biden" 5 "Mike Bloomberg" 6 "Pete Buttigieg"
+
+.                         foreach var of varlist support_dem mostlikely_dem {
+  2.                                 encode `var', gen(e_`var') label(candidates)
+  3.                                 }
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 foreach var of varlist exp_grad_yr support_dem ifdem_notvote ///
+>                         mostlikely_dem {
+  2.                         tab `var'
+  3.                         }
+
+   Expected |
+ Graduation |
+       Year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2020 |         44       80.00       80.00
+       2021 |         11       20.00      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        5.45        5.45
+  Bernie Sanders |         19       34.55       40.00
+Elizabeth Warren |         17       30.91       70.91
+       Joe Biden |          3        5.45       76.36
+  Mike Bloomberg |          7       12.73       89.09
+  Pete Buttigieg |          6       10.91      100.00
+-----------------+-----------------------------------
+           Total |         55      100.00
+
+   If your Democratic candidate of |
+  choice is not selected, will you |
+                   still vote Demo |      Freq.     Percent        Cum.
+-----------------------------------+-----------------------------------
+               Abstain from voting |          4        8.89        8.89
+I will still vote for the Democrat |         41       91.11      100.00
+-----------------------------------+-----------------------------------
+                             Total |         45      100.00
+
+Who do you think |
+     is the most |
+likely candidate |
+   to become the |
+      Democratic |
+       nominee f |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+  Bernie Sanders |         43       78.18       78.18
+Elizabeth Warren |          2        3.64       81.82
+       Joe Biden |          3        5.45       87.27
+  Mike Bloomberg |          4        7.27       94.55
+  Pete Buttigieg |          3        5.45      100.00
+-----------------+-----------------------------------
+           Total |         55      100.00
+
+.                         
+.         *B. Cross Tabs
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+. 
+end of do-file
+
+. br
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/8 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }
+Concentration:1/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:1/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:1/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:1/Candidate Support:4
+  1
+Total Concentration:4
+  8
+Concentration:1/Candidate Support:5
+  1
+Total Concentration:5
+  7
+Concentration:1/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:1/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:1/Candidate Support:8
+  1
+Total Concentration:8
+  12
+Concentration:2/Candidate Support:1
+  3
+Total Concentration:1
+  4
+Concentration:2/Candidate Support:2
+  3
+Total Concentration:2
+  7
+Concentration:2/Candidate Support:3
+  1
+Total Concentration:3
+  4
+Concentration:2/Candidate Support:4
+  2
+Total Concentration:4
+  8
+Concentration:2/Candidate Support:5
+  3
+Total Concentration:5
+  7
+Concentration:2/Candidate Support:6
+  4
+Total Concentration:6
+  9
+Concentration:2/Candidate Support:7
+  2
+Total Concentration:7
+  4
+Concentration:2/Candidate Support:8
+  1
+Total Concentration:8
+  12
+Concentration:3/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:3/Candidate Support:2
+  3
+Total Concentration:2
+  7
+Concentration:3/Candidate Support:3
+  2
+Total Concentration:3
+  4
+Concentration:3/Candidate Support:4
+  3
+Total Concentration:4
+  8
+Concentration:3/Candidate Support:5
+  3
+Total Concentration:5
+  7
+Concentration:3/Candidate Support:6
+  2
+Total Concentration:6
+  9
+Concentration:3/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:3/Candidate Support:8
+  3
+Total Concentration:8
+  12
+Concentration:4/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:4/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:4/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:4/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:4/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:4/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:4/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:4/Candidate Support:8
+  2
+Total Concentration:8
+  12
+Concentration:5/Candidate Support:1
+  1
+Total Concentration:1
+  4
+Concentration:5/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:5/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:5/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:5/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:5/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:5/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:5/Candidate Support:8
+  4
+Total Concentration:8
+  12
+Concentration:6/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:6/Candidate Support:2
+  1
+Total Concentration:2
+  7
+Concentration:6/Candidate Support:3
+  1
+Total Concentration:3
+  4
+Concentration:6/Candidate Support:4
+  2
+Total Concentration:4
+  8
+Concentration:6/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:6/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:6/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:6/Candidate Support:8
+  1
+Total Concentration:8
+  12
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         mat cand_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+.                         matselrc cand_table cand_table, r(2/15)
+invalid numlist has elements outside of allowed range
+r(125);
+
+end of do-file
+
+r(125);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         mat list cand_table
+
+cand_table[9,6]
+           c1         c1         c1         c1         c1         c1
+r1          .          .          .          .          .          .
+r2          0         75          0          0         25          0
+r3          0  42.857143  42.857143          0          0  14.285714
+r4          0         25         50          0          0         25
+r5       12.5         25       37.5          0          0         25
+r6  14.285714  42.857143  42.857143          0          0          0
+r7          0  44.444444  22.222222  11.111111  11.111111  11.111111
+r8          0         50         25          0         25          0
+r9  8.3333333  8.3333333         25  16.666667  33.333333  8.3333333
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         matselrc cand_table cand_table, r(2/9)
+
+.                         mat list cand_table
+
+cand_table[8,6]
+           c1         c1         c1         c1         c1         c1
+r2          0         75          0          0         25          0
+r3          0  42.857143  42.857143          0          0  14.285714
+r4          0         25         50          0          0         25
+r5       12.5         25       37.5          0          0         25
+r6  14.285714  42.857143  42.857143          0          0          0
+r7          0  44.444444  22.222222  11.111111  11.111111  11.111111
+r8          0         50         25          0         25          0
+r9  8.3333333  8.3333333         25  16.666667  33.333333  8.3333333
+
+. 
+end of do-file
+
+. tab concent 
+
+                          Concentration |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+     China/Japan/Southeast Asia Studies |          4        7.27        7.27
+               Conflict Management/ILaw |          7       12.73       20.00
+                                    ERE |          4        7.27       27.27
+European/Eurasian/Middle East/African.. |          8       14.55       41.82
+                                   IDEV |          7       12.73       54.55
+        IPE/AFP/Global Theory & History |          9       16.36       70.91
+                                   LASP |          4        7.27       78.18
+                      Strategic Studies |         12       21.82      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         55      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         putexcel set "$output/Tables.xlsx", modify sheet("Table 1")
+
+.                         putexcel B3=matrix(cand_table)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/T
+> ables.xlsx saved
+
+. 
+end of do-file
+
+. tab ifdem_notvote 
+
+   If your Democratic candidate of |
+  choice is not selected, will you |
+                   still vote Demo |      Freq.     Percent        Cum.
+-----------------------------------+-----------------------------------
+               Abstain from voting |          4        8.89        8.89
+I will still vote for the Democrat |         41       91.11      100.00
+-----------------------------------+-----------------------------------
+                             Total |         45      100.00
+
+. tab mostlikely_dem 
+
+Who do you think |
+     is the most |
+likely candidate |
+   to become the |
+      Democratic |
+       nominee f |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+  Bernie Sanders |         43       78.18       78.18
+Elizabeth Warren |          2        3.64       81.82
+       Joe Biden |          3        5.45       87.27
+  Mike Bloomberg |          4        7.27       94.55
+  Pete Buttigieg |          3        5.45      100.00
+-----------------+-----------------------------------
+           Total |         55      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/8 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & e_mostlikely_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }                       
+Concentration:1/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:1/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:1/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:1/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:1/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:1/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:1/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:1/Candidate Support:8
+  0
+Total Concentration:8
+  12
+Concentration:2/Candidate Support:1
+  4
+Total Concentration:1
+  4
+Concentration:2/Candidate Support:2
+  5
+Total Concentration:2
+  7
+Concentration:2/Candidate Support:3
+  4
+Total Concentration:3
+  4
+Concentration:2/Candidate Support:4
+  6
+Total Concentration:4
+  8
+Concentration:2/Candidate Support:5
+  5
+Total Concentration:5
+  7
+Concentration:2/Candidate Support:6
+  7
+Total Concentration:6
+  9
+Concentration:2/Candidate Support:7
+  2
+Total Concentration:7
+  4
+Concentration:2/Candidate Support:8
+  10
+Total Concentration:8
+  12
+Concentration:3/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:3/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:3/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:3/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:3/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:3/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:3/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:3/Candidate Support:8
+  1
+Total Concentration:8
+  12
+Concentration:4/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:4/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:4/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:4/Candidate Support:4
+  2
+Total Concentration:4
+  8
+Concentration:4/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:4/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:4/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:4/Candidate Support:8
+  0
+Total Concentration:8
+  12
+Concentration:5/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:5/Candidate Support:2
+  1
+Total Concentration:2
+  7
+Concentration:5/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:5/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:5/Candidate Support:5
+  1
+Total Concentration:5
+  7
+Concentration:5/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:5/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:5/Candidate Support:8
+  0
+Total Concentration:8
+  12
+Concentration:6/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:6/Candidate Support:2
+  1
+Total Concentration:2
+  7
+Concentration:6/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:6/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:6/Candidate Support:5
+  1
+Total Concentration:5
+  7
+Concentration:6/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:6/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:6/Candidate Support:8
+  1
+Total Concentration:8
+  12
+
+. 
+.                 **2. Merge table
+.                         mat cand_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+.                         matselrc mostlikely_table mostlikely_table, r(2/9)
+mostlikely_table not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 **2. Merge table
+.                         mat mostlikjely_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+.                         matselrc mostlikely_table mostlikely_table, r(2/9)
+mostlikely_table not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         mat mostlikely_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+.                         matselrc mostlikely_table mostlikely_table, r(2/9)
+
+.                         mat list mostlikely_table
+
+mostlikely_table[8,6]
+           c1         c1         c1         c1         c1         c1
+r2          0        100          0          0          0          0
+r3          0  71.428571          0          0  14.285714  14.285714
+r4          0        100          0          0          0          0
+r5          0         75          0         25          0          0
+r6          0  71.428571          0          0  14.285714  14.285714
+r7          0  77.777778  11.111111          0  11.111111          0
+r8          0         50          0         25         25          0
+r9          0  83.333333  8.3333333          0          0  8.3333333
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         putexcel set "$output/Tables.xlsx", modify sheet("Table 2")
+
+.                         putexcel B3=matrix(mostlikely_table)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/T
+> ables.xlsx saved
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 forvalues most=1/5 {
+  2.                         mat most`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues most=1/5 {
+  2.                         forvalues cont = 1/8 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & chance_trump_win==`most'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat MOST`cand' = MOST`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }                       
+Concentration:/Candidate Support:1
+  0
+Total Concentration:1
+  4
+MOST not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 forvalues m=1/5 {
+  2.                         mat most`m' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues m=1/5 {
+  2.                         forvalues cont = 1/8 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & chance_trump_win==`m'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat MOST`m' = MOST`m'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }                       
+Concentration:/Candidate Support:1
+  0
+Total Concentration:1
+  4
+MOST1 not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                 forvalues m=1/5 {
+  2.                         mat MOST`m' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues m=1/5 {
+  2.                         forvalues cont = 1/8 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & chance_trump_win==`m'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat MOST`m' = MOST`m'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }                       
+Concentration:/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:/Candidate Support:2
+  1
+Total Concentration:2
+  7
+Concentration:/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:/Candidate Support:4
+  2
+Total Concentration:4
+  8
+Concentration:/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:/Candidate Support:7
+  2
+Total Concentration:7
+  4
+Concentration:/Candidate Support:8
+  1
+Total Concentration:8
+  12
+Concentration:/Candidate Support:1
+  3
+Total Concentration:1
+  4
+Concentration:/Candidate Support:2
+  2
+Total Concentration:2
+  7
+Concentration:/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:/Candidate Support:4
+  2
+Total Concentration:4
+  8
+Concentration:/Candidate Support:5
+  5
+Total Concentration:5
+  7
+Concentration:/Candidate Support:6
+  4
+Total Concentration:6
+  9
+Concentration:/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:/Candidate Support:8
+  6
+Total Concentration:8
+  12
+Concentration:/Candidate Support:1
+  1
+Total Concentration:1
+  4
+Concentration:/Candidate Support:2
+  3
+Total Concentration:2
+  7
+Concentration:/Candidate Support:3
+  3
+Total Concentration:3
+  4
+Concentration:/Candidate Support:4
+  4
+Total Concentration:4
+  8
+Concentration:/Candidate Support:5
+  2
+Total Concentration:5
+  7
+Concentration:/Candidate Support:6
+  4
+Total Concentration:6
+  9
+Concentration:/Candidate Support:7
+  1
+Total Concentration:7
+  4
+Concentration:/Candidate Support:8
+  5
+Total Concentration:8
+  12
+Concentration:/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:/Candidate Support:2
+  1
+Total Concentration:2
+  7
+Concentration:/Candidate Support:3
+  1
+Total Concentration:3
+  4
+Concentration:/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:/Candidate Support:6
+  1
+Total Concentration:6
+  9
+Concentration:/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:/Candidate Support:8
+  0
+Total Concentration:8
+  12
+Concentration:/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:/Candidate Support:2
+  0
+Total Concentration:2
+  7
+Concentration:/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:/Candidate Support:4
+  0
+Total Concentration:4
+  8
+Concentration:/Candidate Support:5
+  0
+Total Concentration:5
+  7
+Concentration:/Candidate Support:6
+  0
+Total Concentration:6
+  9
+Concentration:/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:/Candidate Support:8
+  0
+Total Concentration:8
+  12
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         mat chn_win = MOST1, MOST2, MOST3, MOST4, MOST5
+
+.                         matselrc chn_win, r(2/9)
+must name two matrices
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         mat chn_win = MOST1, MOST2, MOST3, MOST4, MOST5
+
+.                         matselrc chn_win chn_win, r(2/9)
+
+.                         mat list chn_win
+
+chn_win[8,5]
+           c1         c1         c1         c1         c1
+r2          0         75         25          0          0
+r3  14.285714  28.571429  42.857143  14.285714          0
+r4          0          0         75         25          0
+r5         25         25         50          0          0
+r6          0  71.428571  28.571429          0          0
+r7          0  44.444444  44.444444  11.111111          0
+r8         50         25         25          0          0
+r9  8.3333333         50  41.666667          0          0
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD00665.000000"
+
+.                         putexcel set "$output/Tables.xlsx", modify sheet("Table 3")
+
+.                         putexcel B3=matrix(chn_win)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/T
+> ables.xlsx saved
+
+. 
+end of do-file
+
+. set seed 123
+
+. gen x = runiform()
+
+. replace x = x<=.5 
+(55 real changes made)
+
+. tab x
+
+          x |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         29       52.73       52.73
+          1 |         26       47.27      100.00
+------------+-----------------------------------
+      Total |         55      100.00
+
+. drop x
+
+. exit, clear

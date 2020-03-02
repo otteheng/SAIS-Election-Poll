@@ -1,0 +1,379 @@
+-----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/
+> Log Files/2_clean data_pie chart_27 Feb 2020.txt
+  log type:  text
+ opened on:  27 Feb 2020, 12:04:07
+
+. ********************************************************************************
+. 
+. ********************************************************************************
+. 
+. global data "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stat
+> a/Raw Data"
+
+. global output "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/St
+> ata/Tables"
+
+. 
+. *************************
+. *       Step 1: Clean       *
+. *************************
+. 
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+. 
+end of do-file
+
+. cls
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        2.94        2.94
+                   African Studies  |          1        1.47        4.41
+            American Foreign Policy |          1        1.47        5.88
+                                 CM |          2        2.94        8.82
+                              China |          1        1.47       10.29
+                      China Studies |          1        1.47       11.76
+                Conflict Management |          2        2.94       14.71
+               Conflict Management  |          2        2.94       17.65
+                       Cuck Studies |          1        1.47       19.12
+                                ERE |          3        4.41       23.53
+ Energy, Resources, and Environment |          1        1.47       25.00
+                                Ere |          1        1.47       26.47
+        European & Eurasian Studies |          1        1.47       27.94
+          European Eurasian Studies |          1        1.47       29.41
+                   European Studies |          1        1.47       30.88
+      European and Eurasian Studies |          2        2.94       33.82
+         Global theory and history  |          1        1.47       35.29
+                               IDEV |          4        5.88       41.18
+                                IPE |          2        2.94       44.12
+                               Idev |          2        2.94       47.06
+          International Development |          1        1.47       48.53
+                  International Law |          1        1.47       50.00
+    International Political Economy |          3        4.41       54.41
+International law and Organizations |          1        1.47       55.88
+                      Japan Studies |          1        1.47       57.35
+                               LASP |          3        4.41       61.76
+             Latin American Studies |          1        1.47       63.24
+                Middle East Studies |          3        4.41       67.65
+               Middle East Studies  |          1        1.47       69.12
+                Middle east studies |          1        1.47       70.59
+                     Southeast Asia |          1        1.47       72.06
+             Southeast Asia Studies |          1        1.47       73.53
+                              Strat |          4        5.88       79.41
+                             Strat  |          1        1.47       80.88
+                  Strategic Studies |         11       16.18       97.06
+                                ere |          1        1.47       98.53
+                              strat |          1        1.47      100.00
+------------------------------------+-----------------------------------
+                              Total |         68      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(52 real changes made)
+
+.                         replace concent = strtrim(concent)
+(6 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        2.94        2.94
+                    AFRICAN STUDIES |          1        1.47        4.41
+            AMERICAN FOREIGN POLICY |          1        1.47        5.88
+                              CHINA |          1        1.47        7.35
+                      CHINA STUDIES |          1        1.47        8.82
+                                 CM |          2        2.94       11.76
+                CONFLICT MANAGEMENT |          4        5.88       17.65
+                       CUCK STUDIES |          1        1.47       19.12
+ ENERGY, RESOURCES, AND ENVIRONMENT |          1        1.47       20.59
+                                ERE |          5        7.35       27.94
+        EUROPEAN & EURASIAN STUDIES |          1        1.47       29.41
+      EUROPEAN AND EURASIAN STUDIES |          2        2.94       32.35
+          EUROPEAN EURASIAN STUDIES |          1        1.47       33.82
+                   EUROPEAN STUDIES |          1        1.47       35.29
+          GLOBAL THEORY AND HISTORY |          1        1.47       36.76
+                               IDEV |          6        8.82       45.59
+          INTERNATIONAL DEVELOPMENT |          1        1.47       47.06
+                  INTERNATIONAL LAW |          1        1.47       48.53
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.47       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          3        4.41       54.41
+                                IPE |          2        2.94       57.35
+                      JAPAN STUDIES |          1        1.47       58.82
+                               LASP |          3        4.41       63.24
+             LATIN AMERICAN STUDIES |          1        1.47       64.71
+                MIDDLE EAST STUDIES |          5        7.35       72.06
+                     SOUTHEAST ASIA |          1        1.47       73.53
+             SOUTHEAST ASIA STUDIES |          1        1.47       75.00
+                              STRAT |          6        8.82       83.82
+                  STRATEGIC STUDIES |         11       16.18      100.00
+------------------------------------+-----------------------------------
+                              Total |         68      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "ERE" if concent=="ENERGY, RESOURCES, AND ENVIRONMENT"
+(1 real change made)
+
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(6 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(2 real changes made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(2 real changes made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", ///
+>                                 "EUROPEAN EURASIAN STUDIES", "EUROPEAN STUDIES")
+(3 real changes made)
+
+.                                 
+.                 **3. Drop bad entries
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        4.48        4.48
+                    AFRICAN STUDIES |          1        1.49        5.97
+                      CHINA STUDIES |          2        2.99        8.96
+                CONFLICT MANAGEMENT |          6        8.96       17.91
+                                ERE |          6        8.96       26.87
+      EUROPEAN AND EURASIAN STUDIES |          5        7.46       34.33
+          GLOBAL THEORY AND HISTORY |          1        1.49       35.82
+                               IDEV |          7       10.45       46.27
+                  INTERNATIONAL LAW |          1        1.49       47.76
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.49       49.25
+    INTERNATIONAL POLITICAL ECONOMY |          5        7.46       56.72
+                      JAPAN STUDIES |          1        1.49       58.21
+                               LASP |          4        5.97       64.18
+                MIDDLE EAST STUDIES |          5        7.46       71.64
+                     SOUTHEAST ASIA |          1        1.49       73.13
+             SOUTHEAST ASIA STUDIES |          1        1.49       74.63
+                  STRATEGIC STUDIES |         17       25.37      100.00
+------------------------------------+-----------------------------------
+                              Total |         67      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(47 real changes made)
+
+.                         
+.                 **4. Combine concentrations
+.                         replace concent = "Conflict Management/ILaw" if ///
+>                                 inlist(concent, "Conflict Management", "International Law And Organizations", ///
+>                                 "International Law")
+(8 real changes made)
+
+.                         replace concent = "IPE/AFP/Global Theory & History" if ///
+>                                 inlist(concent, "International Political Economy", "AFP", ///
+>                                 "Global Theory And History")
+(9 real changes made)
+
+.                         replace concent = "China/Japan/Southeast Asia Studies" if ///
+>                                 inlist(concent, "China Studies", "Japan Studies", ///
+>                                 "Southeast Asia Studies", "Southeast Asia")
+(5 real changes made)
+
+.                         replace concent = "European/Eurasian/Middle East/African Studies" if ///
+>                                 inlist(concent, "European And Eurasian Studies", "Middle East Studies", ///
+>                                 "African Studies")
+variable concent was str35 now str45
+(11 real changes made)
+
+.                         
+.         *C. Clean deg_prog
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         62       92.54       92.54
+        MA  |          1        1.49       94.03
+         Ma |          2        2.99       97.01
+       Mipp |          1        1.49       98.51
+         ma |          1        1.49      100.00
+------------+-----------------------------------
+      Total |         67      100.00
+
+.                 replace deg_prog = upper(deg_prog)
+(4 real changes made)
+
+.                 replace deg_prog = strtrim(deg_prog)
+(1 real change made)
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         66       98.51       98.51
+       MIPP |          1        1.49      100.00
+------------+-----------------------------------
+      Total |         67      100.00
+
+.                 
+.         *D. Encode values
+.                 
+.                 **1. Concent
+.                         encode concent, gen(e_concent) 
+
+. 
+.                 **2. Candidates
+.                         label define candidates 1 "Amy Klobuchar" 2 "Bernie Sanders" 3 "Elizabeth Warren" ///
+>                                 4 "Joe Biden" 5 "Mike Bloomberg" 6 "Pete Buttigieg"
+
+.                         foreach var of varlist support_dem mostlikely_dem {
+  2.                                 encode `var', gen(e_`var') label(candidates)
+  3.                                 }
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 keep support_dem ifdem_notvote mostlikely_dem chance_trump_win
+
+. 
+end of do-file
+
+. br
+
+. export excel using "Pie Charts"
+file Pie Charts.xls saved
+
+. export excel using "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Po
+> ll/Stata/Tables/Pie Charts.xls"
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/P
+> ie Charts.xls saved
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xls", clear
+option clear not allowed
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xls"
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/P
+> ie Charts.xls already exists
+r(602);
+
+end of do-file
+
+r(602);
+
+. help export
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xls", replace
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/P
+> ie Charts.xls saved
+
+. 
+end of do-file
+
+. help export
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xls", replace first
+option first incorrectly specified
+r(198);
+
+end of do-file
+
+r(198);
+
+. help export
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xls", replace firstrow(variables)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/P
+> ie Charts.xls saved
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD06362.000000"
+
+.                 export excel using "$output/Pie Charts.xlsx", replace firstrow(variables)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/P
+> ie Charts.xlsx saved
+
+. 
+end of do-file
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          4        5.97        5.97
+  Bernie Sanders |         21       31.34       37.31
+Elizabeth Warren |         20       29.85       67.16
+       Joe Biden |          5        7.46       74.63
+  Mike Bloomberg |          7       10.45       85.07
+  Pete Buttigieg |          8       11.94       97.01
+       Undecided |          2        2.99      100.00
+-----------------+-----------------------------------
+           Total |         67      100.00
+

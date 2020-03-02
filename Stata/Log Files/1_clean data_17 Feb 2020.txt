@@ -1,0 +1,3579 @@
+-----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/
+> Log Files/1_clean data_17 Feb 2020.txt
+  log type:  text
+ opened on:  17 Feb 2020, 20:40:00
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+. global data "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stat
+> a/Raw Data"
+
+. 
+. *************************
+. *       Step 1: Clean       *
+. *************************
+. 
+. import delimited "$data/SAIS Election Poll: Democratic Primary.csv", ///
+>         encoding(ISO-8859-1) clear
+(9 vars, 56 obs)
+
+. 
+end of do-file
+
+. br
+
+. tab whodoyouthinkisthemostlikelycand
+
+    Who do you think is the most likely |
+     candidate to become the Democratic |
+                              nominee f |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+ particularly if this vice president .. |          1        2.04        2.04
+                         Bernie Sanders |         38       77.55       79.59
+                       Elizabeth Warren |          1        2.04       81.63
+                              Joe Biden |          2        4.08       85.71
+                         Mike Bloomberg |          3        6.12       91.84
+                         Pete Buttigieg |          3        6.12       97.96
+                          Tulsi Gabbard |          1        2.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         49      100.00
+
+. 
+. import excel "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Sta
+> ta/Raw Data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+. tab Whodoyouthinkisthemostlik
+
+Who do you think |
+     is the most |
+likely candidate |
+   to become the |
+      Democratic |
+       nominee f |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+  Bernie Sanders |         38       77.55       77.55
+Elizabeth Warren |          2        4.08       81.63
+       Joe Biden |          2        4.08       85.71
+  Mike Bloomberg |          3        6.12       91.84
+  Pete Buttigieg |          3        6.12       97.96
+   Tulsi Gabbard |          1        2.04      100.00
+-----------------+-----------------------------------
+           Total |         49      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 ren *, lower
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win           
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        4.08        4.08
+                   African Studies  |          1        2.04        6.12
+            American Foreign Policy |          1        2.04        8.16
+                                 CM |          1        2.04       10.20
+                              China |          1        2.04       12.24
+                      China Studies |          1        2.04       14.29
+                Conflict Management |          1        2.04       16.33
+               Conflict Management  |          2        4.08       20.41
+                       Cuck Studies |          1        2.04       22.45
+                                ERE |          3        6.12       28.57
+        European & Eurasian Studies |          1        2.04       30.61
+          European Eurasian Studies |          1        2.04       32.65
+                               IDEV |          4        8.16       40.82
+                                IPE |          1        2.04       42.86
+                               Idev |          2        4.08       46.94
+          International Development |          1        2.04       48.98
+    International Political Economy |          3        6.12       55.10
+International law and Organizations |          1        2.04       57.14
+                      Japan Studies |          1        2.04       59.18
+                               LASP |          2        4.08       63.27
+             Latin American Studies |          1        2.04       65.31
+                Middle East Studies |          2        4.08       69.39
+               Middle East Studies  |          1        2.04       71.43
+                Middle east studies |          1        2.04       73.47
+             Southeast Asia Studies |          1        2.04       75.51
+                              Strat |          2        4.08       79.59
+                             Strat  |          1        2.04       81.63
+                  Strategic Studies |          8       16.33       97.96
+                                ere |          1        2.04      100.00
+------------------------------------+-----------------------------------
+                              Total |         49      100.00
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 replace concent = upper(concent)
+(36 real changes made)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        4.08        4.08
+                   AFRICAN STUDIES  |          1        2.04        6.12
+            AMERICAN FOREIGN POLICY |          1        2.04        8.16
+                              CHINA |          1        2.04       10.20
+                      CHINA STUDIES |          1        2.04       12.24
+                                 CM |          1        2.04       14.29
+                CONFLICT MANAGEMENT |          1        2.04       16.33
+               CONFLICT MANAGEMENT  |          2        4.08       20.41
+                       CUCK STUDIES |          1        2.04       22.45
+                                ERE |          4        8.16       30.61
+        EUROPEAN & EURASIAN STUDIES |          1        2.04       32.65
+          EUROPEAN EURASIAN STUDIES |          1        2.04       34.69
+                               IDEV |          6       12.24       46.94
+          INTERNATIONAL DEVELOPMENT |          1        2.04       48.98
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.04       51.02
+    INTERNATIONAL POLITICAL ECONOMY |          3        6.12       57.14
+                                IPE |          1        2.04       59.18
+                      JAPAN STUDIES |          1        2.04       61.22
+                               LASP |          2        4.08       65.31
+             LATIN AMERICAN STUDIES |          1        2.04       67.35
+                MIDDLE EAST STUDIES |          3        6.12       73.47
+               MIDDLE EAST STUDIES  |          1        2.04       75.51
+             SOUTHEAST ASIA STUDIES |          1        2.04       77.55
+                              STRAT |          2        4.08       81.63
+                             STRAT  |          1        2.04       83.67
+                  STRATEGIC STUDIES |          8       16.33      100.00
+------------------------------------+-----------------------------------
+                              Total |         49      100.00
+
+. 
+end of do-file
+
+. help trim
+
+. help strim
+
+. help trim
+
+. help trim
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         replace concent = strtrim(concent)
+(5 real changes made)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        4.08        4.08
+                    AFRICAN STUDIES |          1        2.04        6.12
+            AMERICAN FOREIGN POLICY |          1        2.04        8.16
+                              CHINA |          1        2.04       10.20
+                      CHINA STUDIES |          1        2.04       12.24
+                                 CM |          1        2.04       14.29
+                CONFLICT MANAGEMENT |          3        6.12       20.41
+                       CUCK STUDIES |          1        2.04       22.45
+                                ERE |          4        8.16       30.61
+        EUROPEAN & EURASIAN STUDIES |          1        2.04       32.65
+          EUROPEAN EURASIAN STUDIES |          1        2.04       34.69
+                               IDEV |          6       12.24       46.94
+          INTERNATIONAL DEVELOPMENT |          1        2.04       48.98
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.04       51.02
+    INTERNATIONAL POLITICAL ECONOMY |          3        6.12       57.14
+                                IPE |          1        2.04       59.18
+                      JAPAN STUDIES |          1        2.04       61.22
+                               LASP |          2        4.08       65.31
+             LATIN AMERICAN STUDIES |          1        2.04       67.35
+                MIDDLE EAST STUDIES |          4        8.16       75.51
+             SOUTHEAST ASIA STUDIES |          1        2.04       77.55
+                              STRAT |          3        6.12       83.67
+                  STRATEGIC STUDIES |          8       16.33      100.00
+------------------------------------+-----------------------------------
+                              Total |         49      100.00
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(3 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(1 real change made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.12        6.12
+                    AFRICAN STUDIES |          1        2.04        8.16
+                      CHINA STUDIES |          2        4.08       12.24
+                CONFLICT MANAGEMENT |          4        8.16       20.41
+                       CUCK STUDIES |          1        2.04       22.45
+                                ERE |          4        8.16       30.61
+        EUROPEAN & EURASIAN STUDIES |          1        2.04       32.65
+          EUROPEAN EURASIAN STUDIES |          1        2.04       34.69
+                               IDEV |          7       14.29       48.98
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.04       51.02
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.16       59.18
+                      JAPAN STUDIES |          1        2.04       61.22
+                               LASP |          3        6.12       67.35
+                MIDDLE EAST STUDIES |          4        8.16       75.51
+             SOUTHEAST ASIA STUDIES |          1        2.04       77.55
+                  STRATEGIC STUDIES |         11       22.45      100.00
+------------------------------------+-----------------------------------
+                              Total |         49      100.00
+
+. 
+end of do-file
+
+. help strpos
+
+. br concent if strpos(concent, "CUCK")
+
+. br
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+        EUROPEAN & EURASIAN STUDIES |          1        2.08       31.25
+          EUROPEAN EURASIAN STUDIES |          1        2.08       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist("EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(0 real changes made)
+
+. 
+end of do-file
+
+. help inlist
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. 
+end of do-file
+
+. tab deg_prog 
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         45       93.75       93.75
+        MA  |          1        2.08       95.83
+         Ma |          1        2.08       97.92
+         ma |          1        2.08      100.00
+------------+-----------------------------------
+      Total |         48      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 replace deg_prog = upper(deg_prog)
+(2 real changes made)
+
+.                 replace deg_prog = strtrim(deg_prog)
+(1 real change made)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         48      100.00      100.00
+------------+-----------------------------------
+      Total |         48      100.00
+
+. 
+end of do-file
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        6.25        6.25
+  Bernie Sanders |         16       33.33       39.58
+Elizabeth Warren |         16       33.33       72.92
+       Joe Biden |          3        6.25       79.17
+  Mike Bloomberg |          4        8.33       87.50
+  Pete Buttigieg |          6       12.50      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+. help encode
+
+. tab deg_prog support_dem
+
+    Degree |
+   Program |      Who would you support for the Democratic nomination for
+ (e.g. MA, |                            president?
+MIPP, PhD) | Amy Klo..  Bernie ..  Elizabe..  Joe Biden  Mike Bl..  Pete Bu.. |     Total
+-----------+------------------------------------------------------------------+----------
+        MA |         3         16         16          3          4          6 |        48 
+-----------+------------------------------------------------------------------+----------
+     Total |         3         16         16          3          4          6 |        48 
+
+
+. tab concent support_dem
+
+                      |      Who would you support for the Democratic nomination for
+                      |                            president?
+        Concentration | Amy Klo..  Bernie ..  Elizabe..  Joe Biden  Mike Bl..  Pete Bu.. |     Total
+----------------------+------------------------------------------------------------------+----------
+                  AFP |         0          1          1          1          0          0 |         3 
+      AFRICAN STUDIES |         0          1          0          0          0          0 |         1 
+        CHINA STUDIES |         0          1          0          0          1          0 |         2 
+  CONFLICT MANAGEMENT |         0          1          2          0          0          1 |         4 
+                  ERE |         0          1          2          0          0          1 |         4 
+EUROPEAN AND EURASI.. |         0          0          0          0          0          2 |         2 
+                 IDEV |         1          3          3          0          0          0 |         7 
+INTERNATIONAL LAW A.. |         0          0          1          0          0          0 |         1 
+INTERNATIONAL POLIT.. |         0          2          1          0          0          1 |         4 
+        JAPAN STUDIES |         0          1          0          0          0          0 |         1 
+                 LASP |         0          2          1          0          0          0 |         3 
+  MIDDLE EAST STUDIES |         1          1          2          0          0          0 |         4 
+SOUTHEAST ASIA STUD.. |         0          1          0          0          0          0 |         1 
+    STRATEGIC STUDIES |         1          1          3          2          3          1 |        11 
+----------------------+------------------------------------------------------------------+----------
+                Total |         3         16         16          3          4          6 |        48 
+
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.         foreach var of varlist exp_grad_yr support_dem ifdem_notvote mostlikely_dem {
+  2.                 tab `var'
+  3.                 }
+
+   Expected |
+ Graduation |
+       Year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2020 |         38       79.17       79.17
+       2021 |         10       20.83      100.00
+------------+-----------------------------------
+      Total |         48      100.00
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        6.25        6.25
+  Bernie Sanders |         16       33.33       39.58
+Elizabeth Warren |         16       33.33       72.92
+       Joe Biden |          3        6.25       79.17
+  Mike Bloomberg |          4        8.33       87.50
+  Pete Buttigieg |          6       12.50      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+   If your Democratic candidate of |
+  choice is not selected, will you |
+                   still vote Demo |      Freq.     Percent        Cum.
+-----------------------------------+-----------------------------------
+               Abstain from voting |          3        7.89        7.89
+I will still vote for the Democrat |         35       92.11      100.00
+-----------------------------------+-----------------------------------
+                             Total |         38      100.00
+
+Who do you think |
+     is the most |
+likely candidate |
+   to become the |
+      Democratic |
+       nominee f |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+  Bernie Sanders |         38       79.17       79.17
+Elizabeth Warren |          2        4.17       83.33
+       Joe Biden |          2        4.17       87.50
+  Mike Bloomberg |          3        6.25       93.75
+  Pete Buttigieg |          3        6.25      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+. 
+end of do-file
+
+. count if concent=="ERE"
+  4
+
+. return list
+
+scalars:
+                  r(N) =  4
+
+. tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. return list
+
+scalars:
+                  r(N) =  48
+                  r(r) =  14
+
+. help tab
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if concent=="ERE"
+  4
+
+.                 scalar num = r(N)
+
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+.                 scalar tot = r(N)
+
+.                 mat A = (num/tot)*100
+
+. 
+end of do-file
+
+. mat list A
+
+symmetric A[1,1]
+           c1
+r1  8.3333333
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        6.25        6.25
+  Bernie Sanders |         16       33.33       39.58
+Elizabeth Warren |         16       33.33       72.92
+       Joe Biden |          3        6.25       79.17
+  Mike Bloomberg |          4        8.33       87.50
+  Pete Buttigieg |          6       12.50      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if support_dem=="Bernie Sanders"
+  16
+
+.                 scalar num = r(N)
+
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+.                 scalar tot = r(N)
+
+.                 mat A = (num/tot)*100
+
+.                 mat list A
+
+symmetric A[1,1]
+           c1
+r1  33.333333
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if support_dem=="Bernie Sanders"
+  16
+
+.                 scalar num = r(N)
+
+.                 tab concent if concent=="ERE"
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                ERE |          4      100.00      100.00
+------------------------------------+-----------------------------------
+                              Total |          4      100.00
+
+.                 scalar tot = r(N)
+
+.                 mat A = (num/tot)*100
+
+.                 mat list A
+
+symmetric A[1,1]
+     c1
+r1  400
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if concent=="ERE" & support_dem=="Bernie Sanders"
+  1
+
+.                 scalar num = r(N)
+
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+.                 scalar num = r(N)
+
+.                 mat A = (num/tot)*100
+
+.                 mat list A
+
+symmetric A[1,1]
+      c1
+r1  1200
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if concent=="ERE" & support_dem=="Bernie Sanders"
+  1
+
+.                 scalar num = r(N)
+
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+.                 scalar tot = r(N)
+
+.                 mat A = (num/tot)*100
+
+.                 mat list A
+
+symmetric A[1,1]
+           c1
+r1  2.0833333
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 count if concent=="ERE" & support_dem=="Bernie Sanders"
+  1
+
+.                 scalar num = r(N)
+
+.                 count if concent=="ERE"
+  4
+
+.                 scalar tot = r(N)
+
+.                 mat A = (num/tot)*100
+
+.                 mat list A
+
+symmetric A[1,1]
+    c1
+r1  25
+
+. 
+end of do-file
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        6.25        6.25
+  Bernie Sanders |         16       33.33       39.58
+Elizabeth Warren |         16       33.33       72.92
+       Joe Biden |          3        6.25       79.17
+  Mike Bloomberg |          4        8.33       87.50
+  Pete Buttigieg |          6       12.50      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+. tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    AFRICAN STUDIES |          1        2.08        8.33
+                      CHINA STUDIES |          2        4.17       12.50
+                CONFLICT MANAGEMENT |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      EUROPEAN AND EURASIAN STUDIES |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        2.08       50.00
+    INTERNATIONAL POLITICAL ECONOMY |          4        8.33       58.33
+                      JAPAN STUDIES |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                MIDDLE EAST STUDIES |          4        8.33       75.00
+             SOUTHEAST ASIA STUDIES |          1        2.08       77.08
+                  STRATEGIC STUDIES |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. help title
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         replace concent = proper(concent) if length(concent)>4
+(31 real changes made)
+
+. 
+end of do-file
+
+. tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    African Studies |          1        2.08        8.33
+                      China Studies |          2        4.17       12.50
+                Conflict Management |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      European And Eurasian Studies |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+International Law And Organizations |          1        2.08       50.00
+    International Political Economy |          4        8.33       58.33
+                      Japan Studies |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                Middle East Studies |          4        8.33       75.00
+             Southeast Asia Studies |          1        2.08       77.08
+                  Strategic Studies |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. help encode
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         encode concent 
+invalid syntax
+r(198);
+
+end of do-file
+
+r(198);
+
+. help encode
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         encode concent, gen(x) 
+
+. 
+end of do-file
+
+. drop x
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         encode concent, gen(e_concent) 
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         label define candidates 1 "Amy Klobuchar" 2 "Bernie Sanders" 3 "Elizabeth Warren" ///
+>                                 4 "Joe Biden" 5 "Mike Bloomberg" 6 "Pete Buttigieg"
+
+.                         foreach var of varlist support_dem mostlikely_dem {
+  2.                                 encode `var', gen(e_`var') label(candidates)
+  3.                                 }
+
+. 
+end of do-file
+
+. tab e_concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    African Studies |          1        2.08        8.33
+                      China Studies |          2        4.17       12.50
+                Conflict Management |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      European And Eurasian Studies |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+International Law And Organizations |          1        2.08       50.00
+    International Political Economy |          4        8.33       58.33
+                      Japan Studies |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                Middle East Studies |          4        8.33       75.00
+             Southeast Asia Studies |          1        2.08       77.08
+                  Strategic Studies |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues i=1/3 {
+  2.                 mat A`i' = ./././././.
+  3.                 }
+
+. 
+end of do-file
+
+. mat list A1
+
+symmetric A1[1,1]
+    c1
+r1   .
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues i=1/3 {
+  2.                 mat A`i' = .\.\.\.\.\.
+  3.                 }
+
+. 
+end of do-file
+
+. mat list A1
+
+A1[6,1]
+    c1
+r1   .
+r2   .
+r3   .
+r4   .
+r5   .
+r6   .
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues i=1/3 {
+  2.                 mat A`i' = .,.,.,.,.,.
+  3.                 }
+
+. 
+end of do-file
+
+. mat list A1
+
+A1[1,6]
+    c1  c2  c3  c4  c5  c6
+r1   .   .   .   .   .   .
+
+. tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        6.25        6.25
+                    African Studies |          1        2.08        8.33
+                      China Studies |          2        4.17       12.50
+                Conflict Management |          4        8.33       20.83
+                                ERE |          4        8.33       29.17
+      European And Eurasian Studies |          2        4.17       33.33
+                               IDEV |          7       14.58       47.92
+International Law And Organizations |          1        2.08       50.00
+    International Political Economy |          4        8.33       58.33
+                      Japan Studies |          1        2.08       60.42
+                               LASP |          3        6.25       66.67
+                Middle East Studies |          4        8.33       75.00
+             Southeast Asia Studies |          1        2.08       77.08
+                  Strategic Studies |         11       22.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         48      100.00
+
+. tab deg_prog 
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         48      100.00      100.00
+------------+-----------------------------------
+      Total |         48      100.00
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        6.25        6.25
+  Bernie Sanders |         16       33.33       39.58
+Elizabeth Warren |         16       33.33       72.92
+       Joe Biden |          3        6.25       79.17
+  Mike Bloomberg |          4        8.33       87.50
+  Pete Buttigieg |          6       12.50      100.00
+-----------------+-----------------------------------
+           Total |         48      100.00
+
+. fre support_dem 
+command fre is unrecognized
+r(199);
+
+. ssc install fre
+checking fre consistency and verifying not already installed...
+installing into /Users/laurieottehenning/Library/Application Support/Stata/ado/plus/...
+installation complete.
+
+. fre support_dem 
+
+support_dem -- Who would you support for the Democratic nomination for president?
+----------------------------------------------------------------------
+                         |      Freq.    Percent      Valid       Cum.
+-------------------------+--------------------------------------------
+Valid   Amy Klobuchar    |          3       6.25       6.25       6.25
+        Bernie Sanders   |         16      33.33      33.33      39.58
+        Elizabeth Warren |         16      33.33      33.33      72.92
+        Joe Biden        |          3       6.25       6.25      79.17
+        Mike Bloomberg   |          4       8.33       8.33      87.50
+        Pete Buttigieg   |          6      12.50      12.50     100.00
+        Total            |         48     100.00     100.00           
+----------------------------------------------------------------------
+
+. fre e_support_dem
+
+e_support_dem -- Who would you support for the Democratic nomination for president?
+------------------------------------------------------------------------
+                           |      Freq.    Percent      Valid       Cum.
+---------------------------+--------------------------------------------
+Valid   1 Amy Klobuchar    |          3       6.25       6.25       6.25
+        2 Bernie Sanders   |         16      33.33      33.33      39.58
+        3 Elizabeth Warren |         16      33.33      33.33      72.92
+        4 Joe Biden        |          3       6.25       6.25      79.17
+        5 Mike Bloomberg   |          4       8.33       8.33      87.50
+        6 Pete Buttigieg   |          6      12.50      12.50     100.00
+        Total              |         48     100.00     100.00           
+------------------------------------------------------------------------
+
+. fre concent
+
+concent -- Concentration
+-----------------------------------------------------------------------------------------
+                                            |      Freq.    Percent      Valid       Cum.
+--------------------------------------------+--------------------------------------------
+Valid   AFP                                 |          3       6.25       6.25       6.25
+        African Studies                     |          1       2.08       2.08       8.33
+        China Studies                       |          2       4.17       4.17      12.50
+        Conflict Management                 |          4       8.33       8.33      20.83
+        ERE                                 |          4       8.33       8.33      29.17
+        European And Eurasian Studies       |          2       4.17       4.17      33.33
+        IDEV                                |          7      14.58      14.58      47.92
+        International Law And Organizations |          1       2.08       2.08      50.00
+        International Political Economy     |          4       8.33       8.33      58.33
+        Japan Studies                       |          1       2.08       2.08      60.42
+        LASP                                |          3       6.25       6.25      66.67
+        Middle East Studies                 |          4       8.33       8.33      75.00
+        Southeast Asia Studies              |          1       2.08       2.08      77.08
+        Strategic Studies                   |         11      22.92      22.92     100.00
+        Total                               |         48     100.00     100.00           
+-----------------------------------------------------------------------------------------
+
+. fre e_concent
+
+e_concent -- Concentration
+--------------------------------------------------------------------------------------------
+                                               |      Freq.    Percent      Valid       Cum.
+-----------------------------------------------+--------------------------------------------
+Valid   1  AFP                                 |          3       6.25       6.25       6.25
+        2  African Studies                     |          1       2.08       2.08       8.33
+        3  China Studies                       |          2       4.17       4.17      12.50
+        4  Conflict Management                 |          4       8.33       8.33      20.83
+        5  ERE                                 |          4       8.33       8.33      29.17
+        6  European And Eurasian Studies       |          2       4.17       4.17      33.33
+        7  IDEV                                |          7      14.58      14.58      47.92
+        8  International Law And Organizations |          1       2.08       2.08      50.00
+        9  International Political Economy     |          4       8.33       8.33      58.33
+        10 Japan Studies                       |          1       2.08       2.08      60.42
+        11 LASP                                |          3       6.25       6.25      66.67
+        12 Middle East Studies                 |          4       8.33       8.33      75.00
+        13 Southeast Asia Studies              |          1       2.08       2.08      77.08
+        14 Strategic Studies                   |         11      22.92      22.92     100.00
+        Total                                  |         48     100.00     100.00           
+--------------------------------------------------------------------------------------------
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                 forvalues cont = 1/14 {
+  3.                         di "CAND`cand'_CONT`cont'" 
+  4.                                 }
+  5.                         }
+CAND1_CONT1
+CAND1_CONT2
+CAND1_CONT3
+CAND1_CONT4
+CAND1_CONT5
+CAND1_CONT6
+CAND1_CONT7
+CAND1_CONT8
+CAND1_CONT9
+CAND1_CONT10
+CAND1_CONT11
+CAND1_CONT12
+CAND1_CONT13
+CAND1_CONT14
+CAND2_CONT1
+CAND2_CONT2
+CAND2_CONT3
+CAND2_CONT4
+CAND2_CONT5
+CAND2_CONT6
+CAND2_CONT7
+CAND2_CONT8
+CAND2_CONT9
+CAND2_CONT10
+CAND2_CONT11
+CAND2_CONT12
+CAND2_CONT13
+CAND2_CONT14
+CAND3_CONT1
+CAND3_CONT2
+CAND3_CONT3
+CAND3_CONT4
+CAND3_CONT5
+CAND3_CONT6
+CAND3_CONT7
+CAND3_CONT8
+CAND3_CONT9
+CAND3_CONT10
+CAND3_CONT11
+CAND3_CONT12
+CAND3_CONT13
+CAND3_CONT14
+CAND4_CONT1
+CAND4_CONT2
+CAND4_CONT3
+CAND4_CONT4
+CAND4_CONT5
+CAND4_CONT6
+CAND4_CONT7
+CAND4_CONT8
+CAND4_CONT9
+CAND4_CONT10
+CAND4_CONT11
+CAND4_CONT12
+CAND4_CONT13
+CAND4_CONT14
+CAND5_CONT1
+CAND5_CONT2
+CAND5_CONT3
+CAND5_CONT4
+CAND5_CONT5
+CAND5_CONT6
+CAND5_CONT7
+CAND5_CONT8
+CAND5_CONT9
+CAND5_CONT10
+CAND5_CONT11
+CAND5_CONT12
+CAND5_CONT13
+CAND5_CONT14
+CAND6_CONT1
+CAND6_CONT2
+CAND6_CONT3
+CAND6_CONT4
+CAND6_CONT5
+CAND6_CONT6
+CAND6_CONT7
+CAND6_CONT8
+CAND6_CONT9
+CAND6_CONT10
+CAND6_CONT11
+CAND6_CONT12
+CAND6_CONT13
+CAND6_CONT14
+
+.                         
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                 forvalues cont = 1/14 {
+  3.                         di "CAND`cand'_CONT`cont'"
+  4.                         mat CAND`cand'_CONT`cont' = .\.\.\.\.\.\.\.\.\.\.\.\.\.\.
+  5.                                 }
+  6.                         }
+CAND1_CONT1
+CAND1_CONT2
+CAND1_CONT3
+CAND1_CONT4
+CAND1_CONT5
+CAND1_CONT6
+CAND1_CONT7
+CAND1_CONT8
+CAND1_CONT9
+CAND1_CONT10
+CAND1_CONT11
+CAND1_CONT12
+CAND1_CONT13
+CAND1_CONT14
+CAND2_CONT1
+CAND2_CONT2
+CAND2_CONT3
+CAND2_CONT4
+CAND2_CONT5
+CAND2_CONT6
+CAND2_CONT7
+CAND2_CONT8
+CAND2_CONT9
+CAND2_CONT10
+CAND2_CONT11
+CAND2_CONT12
+CAND2_CONT13
+CAND2_CONT14
+CAND3_CONT1
+CAND3_CONT2
+CAND3_CONT3
+CAND3_CONT4
+CAND3_CONT5
+CAND3_CONT6
+CAND3_CONT7
+CAND3_CONT8
+CAND3_CONT9
+CAND3_CONT10
+CAND3_CONT11
+CAND3_CONT12
+CAND3_CONT13
+CAND3_CONT14
+CAND4_CONT1
+CAND4_CONT2
+CAND4_CONT3
+CAND4_CONT4
+CAND4_CONT5
+CAND4_CONT6
+CAND4_CONT7
+CAND4_CONT8
+CAND4_CONT9
+CAND4_CONT10
+CAND4_CONT11
+CAND4_CONT12
+CAND4_CONT13
+CAND4_CONT14
+CAND5_CONT1
+CAND5_CONT2
+CAND5_CONT3
+CAND5_CONT4
+CAND5_CONT5
+CAND5_CONT6
+CAND5_CONT7
+CAND5_CONT8
+CAND5_CONT9
+CAND5_CONT10
+CAND5_CONT11
+CAND5_CONT12
+CAND5_CONT13
+CAND5_CONT14
+CAND6_CONT1
+CAND6_CONT2
+CAND6_CONT3
+CAND6_CONT4
+CAND6_CONT5
+CAND6_CONT6
+CAND6_CONT7
+CAND6_CONT8
+CAND6_CONT9
+CAND6_CONT10
+CAND6_CONT11
+CAND6_CONT12
+CAND6_CONT13
+CAND6_CONT14
+
+. 
+end of do-file
+
+. mat list CAND1_CONT1
+
+CAND1_CONT1[15,1]
+     c1
+ r1   .
+ r2   .
+ r3   .
+ r4   .
+ r5   .
+ r6   .
+ r7   .
+ r8   .
+ r9   .
+r10   .
+r11   .
+r12   .
+r13   .
+r14   .
+r15   .
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand'
+  3.                         }
+matrix operation not found
+r(501);
+
+end of do-file
+
+r(501);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 count if concent==`cont' & support_dem==`cand'
+  4.                                         scalar num = r(N)
+  5.                                 count if concent==`cand'
+  6.                                         scalar tot = r(N)
+  7.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+  8.                                 }
+  9.                         }
+type mismatch
+r(109);
+
+end of do-file
+
+r(109);
+
+. mat list CAND1
+
+symmetric CAND1[1,1]
+    c1
+r1   .
+
+. mat CAND1 = CAND1\1
+
+. mat CAND1 = CAND1\1
+
+. mat list CAND1 
+
+CAND1[3,1]
+    c1
+r1   .
+r2   1
+r3   1
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+. 
+end of do-file
+
+. mat list CAND1 
+
+symmetric CAND1[1,1]
+    c1
+r1   .
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  4.                                         scalar num = r(N)
+  5.                                 count if e_concent==`cand'
+  6.                                         scalar tot = r(N)
+  7.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+  8.                                 }
+  9.                         }
+  0
+  3
+  0
+  3
+  0
+  3
+  0
+  3
+  0
+  3
+  0
+  3
+  1
+  3
+  0
+  3
+  0
+  3
+  0
+  3
+  0
+  3
+  1
+  3
+  0
+  3
+  1
+  3
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  0
+  1
+  3
+  1
+  0
+  1
+  2
+  1
+  1
+  1
+  2
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  1
+  2
+  0
+  2
+  0
+  2
+  2
+  2
+  2
+  2
+  0
+  2
+  3
+  2
+  1
+  2
+  1
+  2
+  0
+  2
+  1
+  2
+  2
+  2
+  0
+  2
+  3
+  2
+  1
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  2
+  4
+  0
+  4
+  0
+  4
+  1
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  0
+  4
+  3
+  4
+  0
+  2
+  0
+  2
+  0
+  2
+  1
+  2
+  1
+  2
+  2
+  2
+  0
+  2
+  0
+  2
+  1
+  2
+  0
+  2
+  0
+  2
+  0
+  2
+  0
+  2
+  1
+  2
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         mat cand_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+. 
+end of do-file
+
+. mat list cand_table
+
+cand_table[15,6]
+            c1         c1         c1         c1         c1         c1
+ r1          .          .          .          .          .          .
+ r2          0        100         50         25          0          0
+ r3          0        100          0          0          0          0
+ r4          0        100          0          0         25          0
+ r5          0        100        100          0          0         50
+ r6          0        100        100          0          0         50
+ r7          0          0          0          0          0        100
+ r8  33.333333        300        150          0          0          0
+ r9          0          0         50          0          0          0
+r10          0        200         50          0          0         50
+r11          0        100          0          0          0          0
+r12          0        200         50          0          0          0
+r13  33.333333        100        100          0          0          0
+r14          0        100          0          0          0          0
+r15  33.333333        100        150         50         75         50
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.         *B. Cross Tabs
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 di "Concentration/Candidate Support"
+  4.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration"
+  7.                                 count if e_concent==`cand'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  1
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  1
+Total Concentration
+  3
+Concentration/Candidate Support
+  0
+Total Concentration
+  3
+Concentration/Candidate Support
+  1
+Total Concentration
+  3
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  0
+Total Concentration
+  1
+Concentration/Candidate Support
+  3
+Total Concentration
+  1
+Concentration/Candidate Support
+  0
+Total Concentration
+  1
+Concentration/Candidate Support
+  2
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  2
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  1
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  2
+Total Concentration
+  2
+Concentration/Candidate Support
+  2
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  3
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  2
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  3
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  2
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  1
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  4
+Concentration/Candidate Support
+  3
+Total Concentration
+  4
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  2
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  0
+Total Concentration
+  2
+Concentration/Candidate Support
+  1
+Total Concentration
+  2
+
+. 
+end of do-file
+
+. cls
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cand'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }
+Concentration:1/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:1/Candidate Support:2
+  0
+Total Concentration:2
+  3
+Concentration:1/Candidate Support:3
+  0
+Total Concentration:3
+  3
+Concentration:1/Candidate Support:4
+  0
+Total Concentration:4
+  3
+Concentration:1/Candidate Support:5
+  0
+Total Concentration:5
+  3
+Concentration:1/Candidate Support:6
+  0
+Total Concentration:6
+  3
+Concentration:1/Candidate Support:7
+  1
+Total Concentration:7
+  3
+Concentration:1/Candidate Support:8
+  0
+Total Concentration:8
+  3
+Concentration:1/Candidate Support:9
+  0
+Total Concentration:9
+  3
+Concentration:1/Candidate Support:10
+  0
+Total Concentration:10
+  3
+Concentration:1/Candidate Support:11
+  0
+Total Concentration:11
+  3
+Concentration:1/Candidate Support:12
+  1
+Total Concentration:12
+  3
+Concentration:1/Candidate Support:13
+  0
+Total Concentration:13
+  3
+Concentration:1/Candidate Support:14
+  1
+Total Concentration:14
+  3
+Concentration:2/Candidate Support:1
+  1
+Total Concentration:1
+  1
+Concentration:2/Candidate Support:2
+  1
+Total Concentration:2
+  1
+Concentration:2/Candidate Support:3
+  1
+Total Concentration:3
+  1
+Concentration:2/Candidate Support:4
+  1
+Total Concentration:4
+  1
+Concentration:2/Candidate Support:5
+  1
+Total Concentration:5
+  1
+Concentration:2/Candidate Support:6
+  0
+Total Concentration:6
+  1
+Concentration:2/Candidate Support:7
+  3
+Total Concentration:7
+  1
+Concentration:2/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:2/Candidate Support:9
+  2
+Total Concentration:9
+  1
+Concentration:2/Candidate Support:10
+  1
+Total Concentration:10
+  1
+Concentration:2/Candidate Support:11
+  2
+Total Concentration:11
+  1
+Concentration:2/Candidate Support:12
+  1
+Total Concentration:12
+  1
+Concentration:2/Candidate Support:13
+  1
+Total Concentration:13
+  1
+Concentration:2/Candidate Support:14
+  1
+Total Concentration:14
+  1
+Concentration:3/Candidate Support:1
+  1
+Total Concentration:1
+  2
+Concentration:3/Candidate Support:2
+  0
+Total Concentration:2
+  2
+Concentration:3/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:3/Candidate Support:4
+  2
+Total Concentration:4
+  2
+Concentration:3/Candidate Support:5
+  2
+Total Concentration:5
+  2
+Concentration:3/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:3/Candidate Support:7
+  3
+Total Concentration:7
+  2
+Concentration:3/Candidate Support:8
+  1
+Total Concentration:8
+  2
+Concentration:3/Candidate Support:9
+  1
+Total Concentration:9
+  2
+Concentration:3/Candidate Support:10
+  0
+Total Concentration:10
+  2
+Concentration:3/Candidate Support:11
+  1
+Total Concentration:11
+  2
+Concentration:3/Candidate Support:12
+  2
+Total Concentration:12
+  2
+Concentration:3/Candidate Support:13
+  0
+Total Concentration:13
+  2
+Concentration:3/Candidate Support:14
+  3
+Total Concentration:14
+  2
+Concentration:4/Candidate Support:1
+  1
+Total Concentration:1
+  4
+Concentration:4/Candidate Support:2
+  0
+Total Concentration:2
+  4
+Concentration:4/Candidate Support:3
+  0
+Total Concentration:3
+  4
+Concentration:4/Candidate Support:4
+  0
+Total Concentration:4
+  4
+Concentration:4/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:4/Candidate Support:6
+  0
+Total Concentration:6
+  4
+Concentration:4/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:4/Candidate Support:8
+  0
+Total Concentration:8
+  4
+Concentration:4/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:4/Candidate Support:10
+  0
+Total Concentration:10
+  4
+Concentration:4/Candidate Support:11
+  0
+Total Concentration:11
+  4
+Concentration:4/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:4/Candidate Support:13
+  0
+Total Concentration:13
+  4
+Concentration:4/Candidate Support:14
+  2
+Total Concentration:14
+  4
+Concentration:5/Candidate Support:1
+  0
+Total Concentration:1
+  4
+Concentration:5/Candidate Support:2
+  0
+Total Concentration:2
+  4
+Concentration:5/Candidate Support:3
+  1
+Total Concentration:3
+  4
+Concentration:5/Candidate Support:4
+  0
+Total Concentration:4
+  4
+Concentration:5/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:5/Candidate Support:6
+  0
+Total Concentration:6
+  4
+Concentration:5/Candidate Support:7
+  0
+Total Concentration:7
+  4
+Concentration:5/Candidate Support:8
+  0
+Total Concentration:8
+  4
+Concentration:5/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:5/Candidate Support:10
+  0
+Total Concentration:10
+  4
+Concentration:5/Candidate Support:11
+  0
+Total Concentration:11
+  4
+Concentration:5/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:5/Candidate Support:13
+  0
+Total Concentration:13
+  4
+Concentration:5/Candidate Support:14
+  3
+Total Concentration:14
+  4
+Concentration:6/Candidate Support:1
+  0
+Total Concentration:1
+  2
+Concentration:6/Candidate Support:2
+  0
+Total Concentration:2
+  2
+Concentration:6/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:6/Candidate Support:4
+  1
+Total Concentration:4
+  2
+Concentration:6/Candidate Support:5
+  1
+Total Concentration:5
+  2
+Concentration:6/Candidate Support:6
+  2
+Total Concentration:6
+  2
+Concentration:6/Candidate Support:7
+  0
+Total Concentration:7
+  2
+Concentration:6/Candidate Support:8
+  0
+Total Concentration:8
+  2
+Concentration:6/Candidate Support:9
+  1
+Total Concentration:9
+  2
+Concentration:6/Candidate Support:10
+  0
+Total Concentration:10
+  2
+Concentration:6/Candidate Support:11
+  0
+Total Concentration:11
+  2
+Concentration:6/Candidate Support:12
+  0
+Total Concentration:12
+  2
+Concentration:6/Candidate Support:13
+  0
+Total Concentration:13
+  2
+Concentration:6/Candidate Support:14
+  1
+Total Concentration:14
+  2
+
+. 
+end of do-file
+
+. mat list CAND1
+
+CAND1[15,1]
+            c1
+ r1          .
+ r2          0
+ r3          0
+ r4          0
+ r5          0
+ r6          0
+ r7          0
+ r8  33.333333
+ r9          0
+r10          0
+r11          0
+r12          0
+r13  33.333333
+r14          0
+r15  33.333333
+
+. mat list CAND2
+
+CAND2[15,1]
+      c1
+ r1    .
+ r2  100
+ r3  100
+ r4  100
+ r5  100
+ r6  100
+ r7    0
+ r8  300
+ r9    0
+r10  200
+r11  100
+r12  200
+r13  100
+r14  100
+r15  100
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }
+Concentration:1/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:1/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:1/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:1/Candidate Support:4
+  0
+Total Concentration:4
+  4
+Concentration:1/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:1/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:1/Candidate Support:7
+  1
+Total Concentration:7
+  7
+Concentration:1/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:1/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:1/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:1/Candidate Support:11
+  0
+Total Concentration:11
+  3
+Concentration:1/Candidate Support:12
+  1
+Total Concentration:12
+  4
+Concentration:1/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:1/Candidate Support:14
+  1
+Total Concentration:14
+  11
+Concentration:2/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:2/Candidate Support:2
+  1
+Total Concentration:2
+  1
+Concentration:2/Candidate Support:3
+  1
+Total Concentration:3
+  2
+Concentration:2/Candidate Support:4
+  1
+Total Concentration:4
+  4
+Concentration:2/Candidate Support:5
+  1
+Total Concentration:5
+  4
+Concentration:2/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:2/Candidate Support:7
+  3
+Total Concentration:7
+  7
+Concentration:2/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:2/Candidate Support:9
+  2
+Total Concentration:9
+  4
+Concentration:2/Candidate Support:10
+  1
+Total Concentration:10
+  1
+Concentration:2/Candidate Support:11
+  2
+Total Concentration:11
+  3
+Concentration:2/Candidate Support:12
+  1
+Total Concentration:12
+  4
+Concentration:2/Candidate Support:13
+  1
+Total Concentration:13
+  1
+Concentration:2/Candidate Support:14
+  1
+Total Concentration:14
+  11
+Concentration:3/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:3/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:3/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:3/Candidate Support:4
+  2
+Total Concentration:4
+  4
+Concentration:3/Candidate Support:5
+  2
+Total Concentration:5
+  4
+Concentration:3/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:3/Candidate Support:7
+  3
+Total Concentration:7
+  7
+Concentration:3/Candidate Support:8
+  1
+Total Concentration:8
+  1
+Concentration:3/Candidate Support:9
+  1
+Total Concentration:9
+  4
+Concentration:3/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:3/Candidate Support:11
+  1
+Total Concentration:11
+  3
+Concentration:3/Candidate Support:12
+  2
+Total Concentration:12
+  4
+Concentration:3/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:3/Candidate Support:14
+  3
+Total Concentration:14
+  11
+Concentration:4/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:4/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:4/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:4/Candidate Support:4
+  0
+Total Concentration:4
+  4
+Concentration:4/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:4/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:4/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:4/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:4/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:4/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:4/Candidate Support:11
+  0
+Total Concentration:11
+  3
+Concentration:4/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:4/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:4/Candidate Support:14
+  2
+Total Concentration:14
+  11
+Concentration:5/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:5/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:5/Candidate Support:3
+  1
+Total Concentration:3
+  2
+Concentration:5/Candidate Support:4
+  0
+Total Concentration:4
+  4
+Concentration:5/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:5/Candidate Support:6
+  0
+Total Concentration:6
+  2
+Concentration:5/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:5/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:5/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:5/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:5/Candidate Support:11
+  0
+Total Concentration:11
+  3
+Concentration:5/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:5/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:5/Candidate Support:14
+  3
+Total Concentration:14
+  11
+Concentration:6/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:6/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:6/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:6/Candidate Support:4
+  1
+Total Concentration:4
+  4
+Concentration:6/Candidate Support:5
+  1
+Total Concentration:5
+  4
+Concentration:6/Candidate Support:6
+  2
+Total Concentration:6
+  2
+Concentration:6/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:6/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:6/Candidate Support:9
+  1
+Total Concentration:9
+  4
+Concentration:6/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:6/Candidate Support:11
+  0
+Total Concentration:11
+  3
+Concentration:6/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:6/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:6/Candidate Support:14
+  1
+Total Concentration:14
+  11
+
+.                         
+.                 **2. Merge table
+.                         mat cand_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+. 
+end of do-file
+
+. mat list cand_table
+
+cand_table[15,6]
+            c1         c1         c1         c1         c1         c1
+ r1          .          .          .          .          .          .
+ r2          0  33.333333  33.333333  33.333333          0          0
+ r3          0        100          0          0          0          0
+ r4          0         50          0          0         50          0
+ r5          0         25         50          0          0         25
+ r6          0         25         50          0          0         25
+ r7          0          0          0          0          0        100
+ r8  14.285714  42.857143  42.857143          0          0          0
+ r9          0          0        100          0          0          0
+r10          0         50         25          0          0         25
+r11          0        100          0          0          0          0
+r12          0  66.666667  33.333333          0          0          0
+r13         25         25         50          0          0          0
+r14          0        100          0          0          0          0
+r15  9.0909091  9.0909091  27.272727  18.181818  27.272727  9.0909091
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+. global data "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stat
+> a/Raw Data"
+
+. 
+. *************************
+. *       Step 1: Clean       *
+. *************************
+. 
+. import excel "$data/SAIS Election Poll_ Democratic Primary (Responses).xlsx", sheet("Form Responses 1") firstrow clear
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 ren *, lower
+
+.                 ren timestamp tstamp
+
+.                 ren concentration concent 
+
+.                 ren degreeprogramegmamippp deg_prog 
+
+.                 ren expectedgraduationyear exp_grad_yr
+
+.                 ren whowouldyousupportforthede support_dem 
+
+.                 ren forwhatreasonsdoyoubeliev reason_longansw
+
+.                 ren ifyourdemocraticcandidateof ifdem_notvote
+
+.                 ren whodoyouthinkisthemostlik mostlikely_dem 
+
+.                 ren asofrightnowwhatdoyouthi chance_trump_win   
+
+.                 
+.         *B. Clean Concentration
+.                 tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.85        3.85
+                   African Studies  |          1        1.92        5.77
+            American Foreign Policy |          1        1.92        7.69
+                                 CM |          1        1.92        9.62
+                              China |          1        1.92       11.54
+                      China Studies |          1        1.92       13.46
+                Conflict Management |          2        3.85       17.31
+               Conflict Management  |          2        3.85       21.15
+                       Cuck Studies |          1        1.92       23.08
+                                ERE |          3        5.77       28.85
+        European & Eurasian Studies |          1        1.92       30.77
+          European Eurasian Studies |          1        1.92       32.69
+      European and Eurasian Studies |          1        1.92       34.62
+                               IDEV |          4        7.69       42.31
+                                IPE |          1        1.92       44.23
+                               Idev |          2        3.85       48.08
+          International Development |          1        1.92       50.00
+    International Political Economy |          3        5.77       55.77
+International law and Organizations |          1        1.92       57.69
+                      Japan Studies |          1        1.92       59.62
+                               LASP |          3        5.77       65.38
+             Latin American Studies |          1        1.92       67.31
+                Middle East Studies |          2        3.85       71.15
+               Middle East Studies  |          1        1.92       73.08
+                Middle east studies |          1        1.92       75.00
+             Southeast Asia Studies |          1        1.92       76.92
+                              Strat |          2        3.85       80.77
+                             Strat  |          1        1.92       82.69
+                  Strategic Studies |          8       15.38       98.08
+                                ere |          1        1.92      100.00
+------------------------------------+-----------------------------------
+                              Total |         52      100.00
+
+.                 
+.                 **1. Change to upper case
+.                         replace concent = upper(concent)
+(38 real changes made)
+
+.                         replace concent = strtrim(concent)
+(5 real changes made)
+
+.                         tab concent
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          2        3.85        3.85
+                    AFRICAN STUDIES |          1        1.92        5.77
+            AMERICAN FOREIGN POLICY |          1        1.92        7.69
+                              CHINA |          1        1.92        9.62
+                      CHINA STUDIES |          1        1.92       11.54
+                                 CM |          1        1.92       13.46
+                CONFLICT MANAGEMENT |          4        7.69       21.15
+                       CUCK STUDIES |          1        1.92       23.08
+                                ERE |          4        7.69       30.77
+        EUROPEAN & EURASIAN STUDIES |          1        1.92       32.69
+      EUROPEAN AND EURASIAN STUDIES |          1        1.92       34.62
+          EUROPEAN EURASIAN STUDIES |          1        1.92       36.54
+                               IDEV |          6       11.54       48.08
+          INTERNATIONAL DEVELOPMENT |          1        1.92       50.00
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.92       51.92
+    INTERNATIONAL POLITICAL ECONOMY |          3        5.77       57.69
+                                IPE |          1        1.92       59.62
+                      JAPAN STUDIES |          1        1.92       61.54
+                               LASP |          3        5.77       67.31
+             LATIN AMERICAN STUDIES |          1        1.92       69.23
+                MIDDLE EAST STUDIES |          4        7.69       76.92
+             SOUTHEAST ASIA STUDIES |          1        1.92       78.85
+                              STRAT |          3        5.77       84.62
+                  STRATEGIC STUDIES |          8       15.38      100.00
+------------------------------------+-----------------------------------
+                              Total |         52      100.00
+
+.                         
+.                 **2. Change names
+.                         replace concent = "STRATEGIC STUDIES" if concent=="STRAT"
+(3 real changes made)
+
+.                         replace concent = "AFP" if concent=="AMERICAN FOREIGN POLICY"
+(1 real change made)
+
+.                         replace concent = "CHINA STUDIES" if concent=="CHINA"
+(1 real change made)
+
+.                         replace concent = "IDEV" if concent=="INTERNATIONAL DEVELOPMENT"
+(1 real change made)
+
+.                         replace concent = "INTERNATIONAL POLITICAL ECONOMY" if concent=="IPE"
+(1 real change made)
+
+.                         replace concent = "LASP" if concent=="LATIN AMERICAN STUDIES"
+(1 real change made)
+
+.                         replace concent = "CONFLICT MANAGEMENT" if concent=="CM"
+(1 real change made)
+
+.                         replace concent = "EUROPEAN AND EURASIAN STUDIES" if ///
+>                                 inlist(concent, "EUROPEAN & EURASIAN STUDIES", "EUROPEAN EURASIAN STUDIES")
+(2 real changes made)
+
+.                         drop if strpos(concent, "CUCK")
+(1 observation deleted)
+
+.                         tab concent 
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          3        5.88        5.88
+                    AFRICAN STUDIES |          1        1.96        7.84
+                      CHINA STUDIES |          2        3.92       11.76
+                CONFLICT MANAGEMENT |          5        9.80       21.57
+                                ERE |          4        7.84       29.41
+      EUROPEAN AND EURASIAN STUDIES |          3        5.88       35.29
+                               IDEV |          7       13.73       49.02
+INTERNATIONAL LAW AND ORGANIZATIONS |          1        1.96       50.98
+    INTERNATIONAL POLITICAL ECONOMY |          4        7.84       58.82
+                      JAPAN STUDIES |          1        1.96       60.78
+                               LASP |          4        7.84       68.63
+                MIDDLE EAST STUDIES |          4        7.84       76.47
+             SOUTHEAST ASIA STUDIES |          1        1.96       78.43
+                  STRATEGIC STUDIES |         11       21.57      100.00
+------------------------------------+-----------------------------------
+                              Total |         51      100.00
+
+.                         replace concent = proper(concent) if length(concent)>4
+(33 real changes made)
+
+.                         
+.         *C. Clean deg_prog
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         48       94.12       94.12
+        MA  |          1        1.96       96.08
+         Ma |          1        1.96       98.04
+         ma |          1        1.96      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+.                 replace deg_prog = upper(deg_prog)
+(2 real changes made)
+
+.                 replace deg_prog = strtrim(deg_prog)
+(1 real change made)
+
+.                 tab deg_prog
+
+     Degree |
+    Program |
+  (e.g. MA, |
+ MIPP, PhD) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         MA |         51      100.00      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+.                 
+.         *D. Encode values
+.                 
+.                 **1. Concent
+.                         encode concent, gen(e_concent) 
+
+. 
+.                 **2. Candidates
+.                         label define candidates 1 "Amy Klobuchar" 2 "Bernie Sanders" 3 "Elizabeth Warren" ///
+>                                 4 "Joe Biden" 5 "Mike Bloomberg" 6 "Pete Buttigieg"
+
+.                         foreach var of varlist support_dem mostlikely_dem {
+  2.                                 encode `var', gen(e_`var') label(candidates)
+  3.                                 }
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 foreach var of varlist exp_grad_yr support_dem ifdem_notvote ///
+>                         mostlikely_dem {
+  2.                         tab `var'
+  3.                         }
+
+   Expected |
+ Graduation |
+       Year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2020 |         41       80.39       80.39
+       2021 |         10       19.61      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        5.88        5.88
+  Bernie Sanders |         17       33.33       39.22
+Elizabeth Warren |         17       33.33       72.55
+       Joe Biden |          3        5.88       78.43
+  Mike Bloomberg |          5        9.80       88.24
+  Pete Buttigieg |          6       11.76      100.00
+-----------------+-----------------------------------
+           Total |         51      100.00
+
+   If your Democratic candidate of |
+  choice is not selected, will you |
+                   still vote Demo |      Freq.     Percent        Cum.
+-----------------------------------+-----------------------------------
+               Abstain from voting |          3        7.32        7.32
+I will still vote for the Democrat |         38       92.68      100.00
+-----------------------------------+-----------------------------------
+                             Total |         41      100.00
+
+Who do you think |
+     is the most |
+likely candidate |
+   to become the |
+      Democratic |
+       nominee f |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+  Bernie Sanders |         40       78.43       78.43
+Elizabeth Warren |          2        3.92       82.35
+       Joe Biden |          3        5.88       88.24
+  Mike Bloomberg |          3        5.88       94.12
+  Pete Buttigieg |          3        5.88      100.00
+-----------------+-----------------------------------
+           Total |         51      100.00
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                 forvalues cand=1/6 {
+  2.                         mat CAND`cand' = .
+  3.                         }
+
+.                         
+.                 **1. Fill table                 
+.                         forvalues cand=1/6 {
+  2.                         forvalues cont = 1/14 {
+  3.                                 di "Concentration:`cand'/Candidate Support:`cont'"
+  4.                                 count if e_concent==`cont' & e_support_dem==`cand'
+  5.                                         scalar num = r(N)
+  6.                                 di "Total Concentration:`cont'"
+  7.                                 count if e_concent==`cont'
+  8.                                         scalar tot = r(N)
+  9.                                 mat CAND`cand' = CAND`cand'\((num/tot)*100)
+ 10.                                 }
+ 11.                         }
+Concentration:1/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:1/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:1/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:1/Candidate Support:4
+  0
+Total Concentration:4
+  5
+Concentration:1/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:1/Candidate Support:6
+  0
+Total Concentration:6
+  3
+Concentration:1/Candidate Support:7
+  1
+Total Concentration:7
+  7
+Concentration:1/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:1/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:1/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:1/Candidate Support:11
+  0
+Total Concentration:11
+  4
+Concentration:1/Candidate Support:12
+  1
+Total Concentration:12
+  4
+Concentration:1/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:1/Candidate Support:14
+  1
+Total Concentration:14
+  11
+Concentration:2/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:2/Candidate Support:2
+  1
+Total Concentration:2
+  1
+Concentration:2/Candidate Support:3
+  1
+Total Concentration:3
+  2
+Concentration:2/Candidate Support:4
+  2
+Total Concentration:4
+  5
+Concentration:2/Candidate Support:5
+  1
+Total Concentration:5
+  4
+Concentration:2/Candidate Support:6
+  0
+Total Concentration:6
+  3
+Concentration:2/Candidate Support:7
+  3
+Total Concentration:7
+  7
+Concentration:2/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:2/Candidate Support:9
+  2
+Total Concentration:9
+  4
+Concentration:2/Candidate Support:10
+  1
+Total Concentration:10
+  1
+Concentration:2/Candidate Support:11
+  2
+Total Concentration:11
+  4
+Concentration:2/Candidate Support:12
+  1
+Total Concentration:12
+  4
+Concentration:2/Candidate Support:13
+  1
+Total Concentration:13
+  1
+Concentration:2/Candidate Support:14
+  1
+Total Concentration:14
+  11
+Concentration:3/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:3/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:3/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:3/Candidate Support:4
+  2
+Total Concentration:4
+  5
+Concentration:3/Candidate Support:5
+  2
+Total Concentration:5
+  4
+Concentration:3/Candidate Support:6
+  1
+Total Concentration:6
+  3
+Concentration:3/Candidate Support:7
+  3
+Total Concentration:7
+  7
+Concentration:3/Candidate Support:8
+  1
+Total Concentration:8
+  1
+Concentration:3/Candidate Support:9
+  1
+Total Concentration:9
+  4
+Concentration:3/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:3/Candidate Support:11
+  1
+Total Concentration:11
+  4
+Concentration:3/Candidate Support:12
+  2
+Total Concentration:12
+  4
+Concentration:3/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:3/Candidate Support:14
+  3
+Total Concentration:14
+  11
+Concentration:4/Candidate Support:1
+  1
+Total Concentration:1
+  3
+Concentration:4/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:4/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:4/Candidate Support:4
+  0
+Total Concentration:4
+  5
+Concentration:4/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:4/Candidate Support:6
+  0
+Total Concentration:6
+  3
+Concentration:4/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:4/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:4/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:4/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:4/Candidate Support:11
+  0
+Total Concentration:11
+  4
+Concentration:4/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:4/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:4/Candidate Support:14
+  2
+Total Concentration:14
+  11
+Concentration:5/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:5/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:5/Candidate Support:3
+  1
+Total Concentration:3
+  2
+Concentration:5/Candidate Support:4
+  0
+Total Concentration:4
+  5
+Concentration:5/Candidate Support:5
+  0
+Total Concentration:5
+  4
+Concentration:5/Candidate Support:6
+  0
+Total Concentration:6
+  3
+Concentration:5/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:5/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:5/Candidate Support:9
+  0
+Total Concentration:9
+  4
+Concentration:5/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:5/Candidate Support:11
+  1
+Total Concentration:11
+  4
+Concentration:5/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:5/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:5/Candidate Support:14
+  3
+Total Concentration:14
+  11
+Concentration:6/Candidate Support:1
+  0
+Total Concentration:1
+  3
+Concentration:6/Candidate Support:2
+  0
+Total Concentration:2
+  1
+Concentration:6/Candidate Support:3
+  0
+Total Concentration:3
+  2
+Concentration:6/Candidate Support:4
+  1
+Total Concentration:4
+  5
+Concentration:6/Candidate Support:5
+  1
+Total Concentration:5
+  4
+Concentration:6/Candidate Support:6
+  2
+Total Concentration:6
+  3
+Concentration:6/Candidate Support:7
+  0
+Total Concentration:7
+  7
+Concentration:6/Candidate Support:8
+  0
+Total Concentration:8
+  1
+Concentration:6/Candidate Support:9
+  1
+Total Concentration:9
+  4
+Concentration:6/Candidate Support:10
+  0
+Total Concentration:10
+  1
+Concentration:6/Candidate Support:11
+  0
+Total Concentration:11
+  4
+Concentration:6/Candidate Support:12
+  0
+Total Concentration:12
+  4
+Concentration:6/Candidate Support:13
+  0
+Total Concentration:13
+  1
+Concentration:6/Candidate Support:14
+  1
+Total Concentration:14
+  11
+
+.                         
+.                 **2. Merge table
+.                         mat cand_table = CAND1, CAND2, CAND3, CAND4, CAND5, CAND6
+
+. 
+end of do-file
+
+. mat list cand_table          
+
+cand_table[15,6]
+            c1         c1         c1         c1         c1         c1
+ r1          .          .          .          .          .          .
+ r2          0  33.333333  33.333333  33.333333          0          0
+ r3          0        100          0          0          0          0
+ r4          0         50          0          0         50          0
+ r5          0         40         40          0          0         20
+ r6          0         25         50          0          0         25
+ r7          0          0  33.333333          0          0  66.666667
+ r8  14.285714  42.857143  42.857143          0          0          0
+ r9          0          0        100          0          0          0
+r10          0         50         25          0          0         25
+r11          0        100          0          0          0          0
+r12          0         50         25          0         25          0
+r13         25         25         50          0          0          0
+r14          0        100          0          0          0          0
+r15  9.0909091  9.0909091  27.272727  18.181818  27.272727  9.0909091
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         matselrc cand_table cand_table, r(2/15)
+command matselrc is unrecognized
+r(199);
+
+end of do-file
+
+r(199);
+
+. ssc install matselrc
+ssc install: "matselrc" not found at SSC, type -findit matselrc-
+(To find all packages at SSC that start with m, type -ssc describe m-)
+r(601);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         matselrc cand_table cand_table, r(2/15)
+command matselrc is unrecognized
+r(199);
+
+end of do-file
+
+r(199);
+
+. findit matselrc
+
+. ssc install dm79
+ssc install: "dm79" not found at SSC, type -findit dm79-
+(To find all packages at SSC that start with d, type -ssc describe d-)
+r(601);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         matselrc cand_table cand_table, r(2/15)
+command matselrc is unrecognized
+r(199);
+
+end of do-file
+
+r(199);
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         matselrc cand_table cand_table, r(2/15)
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         mat list cand_table
+
+cand_table[14,6]
+            c1         c1         c1         c1         c1         c1
+ r2          0  33.333333  33.333333  33.333333          0          0
+ r3          0        100          0          0          0          0
+ r4          0         50          0          0         50          0
+ r5          0         40         40          0          0         20
+ r6          0         25         50          0          0         25
+ r7          0          0  33.333333          0          0  66.666667
+ r8  14.285714  42.857143  42.857143          0          0          0
+ r9          0          0        100          0          0          0
+r10          0         50         25          0          0         25
+r11          0        100          0          0          0          0
+r12          0         50         25          0         25          0
+r13         25         25         50          0          0          0
+r14          0        100          0          0          0          0
+r15  9.0909091  9.0909091  27.272727  18.181818  27.272727  9.0909091
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+. global output "/Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/St
+> ata/Tables"
+
+. 
+end of do-file
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         putexcel set "$output\\Tables.xlsx", modify sheet("Table 1")
+
+.                         putexcel B3=matrix(cand_table)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables\\
+> Tables.xlsx saved
+
+. 
+end of do-file
+
+. mat list cand_table
+
+cand_table[14,6]
+            c1         c1         c1         c1         c1         c1
+ r2          0  33.333333  33.333333  33.333333          0          0
+ r3          0        100          0          0          0          0
+ r4          0         50          0          0         50          0
+ r5          0         40         40          0          0         20
+ r6          0         25         50          0          0         25
+ r7          0          0  33.333333          0          0  66.666667
+ r8  14.285714  42.857143  42.857143          0          0          0
+ r9          0          0        100          0          0          0
+r10          0         50         25          0          0         25
+r11          0        100          0          0          0          0
+r12          0         50         25          0         25          0
+r13         25         25         50          0          0          0
+r14          0        100          0          0          0          0
+r15  9.0909091  9.0909091  27.272727  18.181818  27.272727  9.0909091
+
+. do "/var/folders/1h/4g4nx7f92qb_w7dk011zgbwm0000gn/T//SD12816.000000"
+
+.                         putexcel set "$output/Tables.xlsx", modify sheet("Table 1")
+
+.                         putexcel B3=matrix(cand_table)
+file /Users/laurieottehenning/Documents/personal/G/SAIS/Spring 2020/Club/Data Visualization/SAIS Election Poll/Stata/Tables/T
+> ables.xlsx saved
+
+. 
+end of do-file
+
+. tab concent if support_dem=="Bernie Sanders"
+
+                      Concentration |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+                                AFP |          1        5.88        5.88
+                    African Studies |          1        5.88       11.76
+                      China Studies |          1        5.88       17.65
+                Conflict Management |          2       11.76       29.41
+                                ERE |          1        5.88       35.29
+                               IDEV |          3       17.65       52.94
+    International Political Economy |          2       11.76       64.71
+                      Japan Studies |          1        5.88       70.59
+                               LASP |          2       11.76       82.35
+                Middle East Studies |          1        5.88       88.24
+             Southeast Asia Studies |          1        5.88       94.12
+                  Strategic Studies |          1        5.88      100.00
+------------------------------------+-----------------------------------
+                              Total |         17      100.00
+
+. tab support_dem 
+
+   Who would you |
+ support for the |
+      Democratic |
+  nomination for |
+      president? |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+   Amy Klobuchar |          3        5.88        5.88
+  Bernie Sanders |         17       33.33       39.22
+Elizabeth Warren |         17       33.33       72.55
+       Joe Biden |          3        5.88       78.43
+  Mike Bloomberg |          5        9.80       88.24
+  Pete Buttigieg |          6       11.76      100.00
+-----------------+-----------------------------------
+           Total |         51      100.00
+
+. exit, clear
